@@ -112,7 +112,7 @@ function steamLinkAliasRedirect(): Plugin {
   };
 }
 
-// Dev-only stand-in for the nginx random-worker routing (the openfront_workers
+// Dev-only stand-in for the nginx random-worker routing (the OpenWars_workers
 // upstream). Forwards these prefix-less POSTs to a randomly chosen worker port
 // so the worker can mint a self-owned id. Runs as direct middleware (before
 // vite's /api proxy).
@@ -183,7 +183,7 @@ export default defineConfig(({ mode }) => {
       cdnBase,
     ),
     desktopLogoImageUrl: buildAssetUrl(
-      "images/OpenFront.png",
+      "images/OpenWars.png",
       assetManifest,
       cdnBase,
     ),
