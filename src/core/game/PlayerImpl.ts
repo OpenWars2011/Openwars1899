@@ -60,6 +60,7 @@ import {
   canBuildTransportShip,
 } from "./TransportShipUtils";
 import { UnitImpl } from "./UnitImpl";
+import { stockPrice, StockSymbol } from "./StockMarket";
 
 // Rot re-stamps every second, so a little slack keeps the cue from strobing.
 const DECAY_CUE_GRACE_TICKS = 30;
@@ -109,6 +110,8 @@ export class PlayerImpl implements Player {
 
   private _gold: bigint;
   private _troops: bigint;
+  private _hasSatellite = false;
+  private _stockHoldings: Partial<Record<StockSymbol, number>> = {};
 
   markedTraitorTick = -1;
   markedDoomsdayClockTick = -1;
@@ -349,6 +352,8 @@ export class PlayerImpl implements Player {
       outgoingAllianceRequests: outgoingAllianceRequests,
       alliances: allianceViews,
       hasSpawned: this.hasSpawned(),
+      hasSatellite: this.hasSatellite(),
+      stockHoldings: this.stockHoldings(),
       spawnTile: this._spawnTile,
       betrayals: this._betrayalCount,
       lastDeleteUnitTick: this.lastDeleteUnitTick,
@@ -617,6 +622,41 @@ export class PlayerImpl implements Player {
 
   hasSpawned(): boolean {
     return this._spawnTile !== undefined;
+  }
+
+  hasSatellite(): boolean {
+    return this._hasSatellite;
+  }
+
+  purchaseSatellite(): boolean {
+    const cost = 70_000_000n;
+    if (this._hasSatellite || this.gold() < cost) return false;
+    this.removeGold(cost);
+    this._hasSatellite = true;
+    return true;
+  }
+
+  stockHoldings(): Readonly<Partial<Record<StockSymbol, number>>> {
+    return this._stockHoldings;
+  }
+
+  tradeStock(symbol: StockSymbol, shares: number, buy: boolean): boolean {
+    if (!Number.isInteger(shares) || shares <= 0 || shares > 1000) return false;
+    const price = stockPrice(this.mg.ticks(), symbol);
+    const held = this._stockHoldings[symbol] ?? 0;
+    if (buy) {
+      const total = price * BigInt(shares);
+      if (this.gold() < total) return false;
+      this.removeGold(total);
+      this._stockHoldings[symbol] = held + shares;
+      return true;
+    }
+    if (held < shares) return false;
+    this.addGold(price * BigInt(shares));
+    const remaining = held - shares;
+    if (remaining === 0) delete this._stockHoldings[symbol];
+    else this._stockHoldings[symbol] = remaining;
+    return true;
   }
 
   setSpawnTile(spawnTile: TileRef): void {
@@ -1431,6 +1471,11 @@ export class PlayerImpl implements Player {
           return false;
         }
         return this.nukeSpawn(targetTile, unitType);
+      case UnitType.SuperMIRV:
+        if (!this.mg.hasOwner(targetTile)) {
+          return false;
+        }
+        return this.nukeSpawn(targetTile, unitType);
       case UnitType.AtomBomb:
       case UnitType.HydrogenBomb:
         return this.nukeSpawn(targetTile, unitType);
@@ -1445,6 +1490,12 @@ export class PlayerImpl implements Player {
         return targetTile;
       case UnitType.TransportShip:
         return canBuildTransportShip(this.mg, this, targetTile);
+      case UnitType.Helicopter:
+        return this.landBasedUnitSpawn(targetTile);
+      case UnitType.Paratrooper:
+        return this.mg.isLand(targetTile) && !this.mg.isImpassable(targetTile)
+          ? targetTile
+          : false;
       case UnitType.TradeShip:
         return this.tradeShipSpawn(targetTile);
       case UnitType.Train:
@@ -1484,6 +1535,7 @@ export class PlayerImpl implements Player {
     if (
       config.gameConfig().gameMode === GameMode.Team &&
       nukeType !== UnitType.MIRV &&
+      nukeType !== UnitType.SuperMIRV &&
       !gameOver
     ) {
       const magnitude = config.nukeMagnitudes(nukeType);

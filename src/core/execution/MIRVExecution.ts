@@ -50,13 +50,14 @@ export class MirvExecution implements Execution {
   constructor(
     private player: Player,
     private dst: TileRef,
+    private mirvType: UnitType = UnitType.MIRV,
   ) {}
 
   init(mg: Game, ticks: number): void {
     this.random = new PseudoRandom(mg.ticks() + simpleHash(this.player.id()));
     this.mg = mg;
     this.targetPlayer = this.mg.owner(this.dst);
-    this.speed = this.mg.config().nukeSpeed(UnitType.MIRV);
+    this.speed = this.mg.config().nukeSpeed(this.mirvType);
     this.pathFinder = UniversalPathFinding.Parabola(mg, {
       increment: this.speed,
     });
@@ -79,18 +80,18 @@ export class MirvExecution implements Execution {
 
   tick(ticks: number): void {
     if (this.nuke === null) {
-      const spawn = this.player.canBuild(UnitType.MIRV, this.dst);
+      const spawn = this.player.canBuild(this.mirvType, this.dst);
       if (spawn === false) {
         console.warn(`cannot build MIRV`);
         this.active = false;
         return;
       }
       this.spawnTile = spawn;
-      this.nuke = this.player.buildUnit(UnitType.MIRV, spawn, {
+      this.nuke = this.player.buildUnit(this.mirvType, spawn, {
         targetTile: this.dst,
         targetPlayer: this.targetPlayer,
       });
-      this.mg.stats().bombLaunch(this.player, this.targetPlayer, UnitType.MIRV);
+      this.mg.stats().bombLaunch(this.player, this.targetPlayer, this.mirvType);
       const x = Math.floor((this.baseX + this.mg.x(this.nuke.tile())) / 2);
       const y = Math.max(0, this.baseY - 500) + 50;
       this.separateDst = this.mg.ref(x, y);
@@ -112,7 +113,7 @@ export class MirvExecution implements Execution {
       this.mg.displayIncomingUnit(
         this.nuke.id(),
         // TODO TranslateText
-        `⚠️⚠️⚠️ ${this.player.displayName()} - MIRV INBOUND ⚠️⚠️⚠️`,
+        `⚠️⚠️⚠️ ${this.player.displayName()} - ${this.mirvType} INBOUND ⚠️⚠️⚠️`,
         MessageType.MIRV_INBOUND,
         this.targetPlayer.id(),
       );
@@ -163,7 +164,7 @@ export class MirvExecution implements Execution {
       this.separate();
       this.active = false;
       // Record stats
-      this.mg.stats().bombLand(this.player, this.targetPlayer, UnitType.MIRV);
+      this.mg.stats().bombLand(this.player, this.targetPlayer, this.mirvType);
     }
   }
 

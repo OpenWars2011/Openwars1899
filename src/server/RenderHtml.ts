@@ -42,7 +42,7 @@ export async function renderHtmlContent(htmlPath: string): Promise<string> {
       cdnBase,
     ),
     desktopLogoImageUrl: buildAssetUrl(
-      "images/OpenFront.png",
+      "images/OpenWars.png",
       assetManifest,
       cdnBase,
     ),

@@ -23,7 +23,7 @@ function setConfig() {
     gameEnv: "prod",
     numWorkers: 1,
     turnstileSiteKey: "x",
-    jwtAudience: "openfront.dev",
+    jwtAudience: "OpenWars.dev",
     instanceId: "desktop",
     gitCommit: "test",
   };

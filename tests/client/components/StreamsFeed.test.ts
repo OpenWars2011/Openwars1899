@@ -16,10 +16,10 @@ const getStreamsMock = vi.mocked(getStreams);
 
 const entry = {
   platform: "twitch" as const,
-  channel: "openfrontmasters",
+  channel: "OpenWarsmasters",
   displayName: "OFM",
   viewers: 100,
-  url: "https://twitch.tv/openfrontmasters",
+  url: "https://twitch.tv/OpenWarsmasters",
   startedAt: "2026-08-03T12:00:00Z",
 };
 
@@ -48,7 +48,7 @@ describe("StreamsFeedSchema", () => {
   it("rejects the legacy {enabled, channels} payload", () => {
     const parsed = StreamsFeedSchema.safeParse({
       enabled: true,
-      channels: ["openfrontmasters"],
+      channels: ["OpenWarsmasters"],
     });
     expect(parsed.success).toBe(false);
   });
@@ -129,7 +129,7 @@ describe("isFeedFresh", () => {
 describe("broadcastKey", () => {
   it("is stable for the same broadcast", () => {
     expect(broadcastKey(entry)).toBe(
-      "twitch:openfrontmasters:2026-08-03T12:00:00Z",
+      "twitch:OpenWarsmasters:2026-08-03T12:00:00Z",
     );
   });
 

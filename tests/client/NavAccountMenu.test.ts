@@ -40,7 +40,7 @@ function userMe(subscribed = false, publicId = "p"): UserMeResponse {
     user: { email: "player@example.com" },
     player: {
       publicId,
-      ...(subscribed ? { subscription: { tier: "plutonium" } } : {}),
+      ...(subscribed ? { subscription: { tier: "Radium" } } : {}),
     },
   } as unknown as UserMeResponse;
 }

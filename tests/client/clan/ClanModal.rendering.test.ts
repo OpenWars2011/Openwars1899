@@ -309,7 +309,7 @@ describe("ClanModal — rendering", () => {
       );
 
       expect(display?.querySelector("cap-icon")).toBeTruthy();
-      expect(display?.querySelector("plutonium-icon")).toBeTruthy();
+      expect(display?.querySelector("Radium-icon")).toBeTruthy();
     });
 
     it("omits the balance widgets entirely when the API reports none", async () => {
@@ -319,7 +319,7 @@ describe("ClanModal — rendering", () => {
 
       expect(display).toBeTruthy();
       expect(modal.querySelector("cap-icon")).toBeNull();
-      expect(modal.querySelector("plutonium-icon")).toBeNull();
+      expect(modal.querySelector("Radium-icon")).toBeNull();
       expect(modal.textContent).not.toContain("undefined");
     });
 
@@ -372,7 +372,7 @@ describe("ClanModal — rendering", () => {
       );
 
       expect(display?.querySelector("cap-icon")).toBeTruthy();
-      expect(display?.querySelector("plutonium-icon")).toBeTruthy();
+      expect(display?.querySelector("Radium-icon")).toBeTruthy();
     });
 
     it("omits the card balance widgets when the API reports none", async () => {
@@ -380,19 +380,19 @@ describe("ClanModal — rendering", () => {
 
       expect(display).toBeTruthy();
       expect(modal.querySelector("cap-icon")).toBeNull();
-      expect(modal.querySelector("plutonium-icon")).toBeNull();
+      expect(modal.querySelector("Radium-icon")).toBeNull();
       expect(modal.textContent).not.toContain("undefined");
     });
 
     it("uses the compact card variant, not the header size", async () => {
       const card = await showMyClan(makeClan({ hardBalance: "25" }));
       const cardSize = (
-        card?.querySelector("plutonium-icon") as HTMLElement & { size: number }
+        card?.querySelector("Radium-icon") as HTMLElement & { size: number }
       ).size;
 
       const header = await openDetail(makeClan({ hardBalance: "25" }));
       const headerSize = (
-        header?.querySelector("plutonium-icon") as HTMLElement & {
+        header?.querySelector("Radium-icon") as HTMLElement & {
           size: number;
         }
       ).size;

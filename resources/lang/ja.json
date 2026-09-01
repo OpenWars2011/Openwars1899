@@ -415,7 +415,7 @@
     "common": "コモン",
     "epic": "エピック",
     "free": "+{numFree}のボーナス！",
-    "hard": "プルトニウム",
+    "hard": "ラジウム",
     "legendary": "レジェンド",
     "per_day": "/日",
     "public_lobbies": "公開ロビーを作成",
@@ -675,7 +675,7 @@
     "preset_colorblind_desc": "色覚対応した領土と国境線の色",
     "preset_custom": "カスタム",
     "preset_default": "デフォルト",
-    "preset_default_desc": "標準的なOpenFrontの見た目",
+    "preset_default_desc": "標準的なOpenWarsの見た目",
     "preset_delete_confirm": "プリセット「{name}」を削除しますか？",
     "preset_migrated_name": "自分の設定",
     "preset_name_placeholder": "プリセット名",
@@ -801,7 +801,7 @@
     "radial_title": "円形メニュー",
     "table_action": "操作",
     "table_key": "キー",
-    "troubleshooting_desc": "OpenFrontの再生中にパフォーマンスの問題、クラッシュ、その他の問題が発生した場合は、トラブルシューティングページをご覧ください。問題の診断と修正に役立ちます：",
+    "troubleshooting_desc": "OpenWarsの再生中にパフォーマンスの問題、クラッシュ、その他の問題が発生した場合は、トラブルシューティングページをご覧ください。問題の診断と修正に役立ちます：",
     "ui_attack_ratio": "攻撃比率 - 攻撃時に使用する兵力の割合で、スライダーで調整でき、攻撃側の兵力が防御側より多いほど損失が減り、少ないと攻撃側の損害が増えますが、この効果は攻撃と防御の比率が2対1を超えるとそれ以上強化されません。\n",
     "ui_control": "コントロールパネル",
     "ui_control_desc": "コントロールパネルには以下が含まれます :",
@@ -821,7 +821,7 @@
     "ui_wilderness": "荒野",
     "ui_your_team": "あなたのチーム :",
     "video_tutorial": "チュートリアル動画",
-    "video_tutorial_title": "OpenFront.io チュートリアル"
+    "video_tutorial_title": "OpenWars.io チュートリアル"
   },
   "host_modal": {
     "anonymous_players": "匿名のプレイヤー",
@@ -887,14 +887,14 @@
     "got_it": "了解",
     "how": "詳細",
     "later": "あとで",
-    "modal_desc": "お使いのブラウザは全画面表示に対応していませんが、OpenFrontをホーム画面に追加することで、没入感のある体験をお楽しみいただけます：",
+    "modal_desc": "お使いのブラウザは全画面表示に対応していませんが、OpenWarsをホーム画面に追加することで、没入感のある体験をお楽しみいただけます：",
     "modal_title": "iOSでフルスクリーンにする",
     "never": "しない",
     "step_add_to_home_label": "ホーム画面に追加",
     "step_open": "ホーム画面から開く - アドレスバーなしでフルスクリーンを起動します",
     "step_scroll_and_tap": "下へスクロールしてタップ",
     "step_share": "ブラウザの共有ボタンをタップ",
-    "text": "フルスクリーンにするには、OpenFrontをホーム画面に追加してください"
+    "text": "フルスクリーンにするには、OpenWarsをホーム画面に追加してください"
   },
   "kick_reason": {
     "admin": "管理者によってキックされました。",
@@ -962,7 +962,7 @@
   "main": {
     "account": "アカウント",
     "clans": "クラン",
-    "copyright": "©️ OpenFront™ と貢献者",
+    "copyright": "©️ OpenWars™ と貢献者",
     "create": "ロビーを作成",
     "discord_avatar_alt": "Discordのプロフィールアバター",
     "github": "GitHub",
@@ -981,7 +981,7 @@
     "solo": "ソロ",
     "store": "ストア",
     "terms_of_service": "利用規約",
-    "title": "OpenFront (ALPHA)",
+    "title": "OpenWars (ALPHA)",
     "troubleshooting": "トラブルシューティング",
     "user_avatar_alt": "{username}のアバター",
     "wiki": "Wiki"
@@ -1148,7 +1148,7 @@
     "dismiss": "解除",
     "error": "保存できませんでした。もう一度お試しください。",
     "no": "今はしない",
-    "title": "OpenFrontの最新情報を受け取りますか？",
+    "title": "OpenWarsの最新情報を受け取りますか？",
     "yes": "はい"
   },
   "matchmaking_modal": {
@@ -1189,7 +1189,7 @@
   },
   "news_box": {
     "dismiss": "無視",
-    "firefox_warning": "OpenFront.ioは[Firefoxベースのブラウザ](https://simple.wikipedia.org/wiki/Web_browsers_based_on_Firefox)でうまく動作しません。良いパフォーマンスのために[Chromiumベースのブラウザ](https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium)を使用するのをおすすめします。",
+    "firefox_warning": "OpenWars.ioは[Firefoxベースのブラウザ](https://simple.wikipedia.org/wiki/Web_browsers_based_on_Firefox)でうまく動作しません。良いパフォーマンスのために[Chromiumベースのブラウザ](https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium)を使用するのをおすすめします。",
     "go_to_item": "{num}番目のアイテムに移動",
     "news": "お知らせ",
     "tournament": "トーナメント",
@@ -1448,9 +1448,9 @@
   },
   "steam_wishlist": {
     "cta": "ウィッシュリストに追加",
-    "on_steam": "SteamでOpenFrontを開く",
+    "on_steam": "SteamでOpenWarsを開く",
     "release": "2026年７月〜９月に公開",
-    "title": "OpenFrontをウィッシュリストに登録！"
+    "title": "OpenWarsをウィッシュリストに登録！"
   },
   "store": {
     "already_subscribed": "既に購入されています。",
@@ -1466,14 +1466,14 @@
     "crowns": "クラウン",
     "currency_pack_purchase_success": "通貨パックを購入しました！",
     "custom_amount": "金額を選択する",
-    "custom_currency_purchase_success": "プルトニウムの購入に成功しました！",
+    "custom_currency_purchase_success": "ラジウムの購入に成功しました！",
     "effects": "エフェクト",
     "flags": "旗",
     "insufficient_currency_body": "{item}を購入するには、あと{amount, number} {currency}必要です。",
     "insufficient_currency_title": "{currency}が不足しています",
     "login_required": "通貨で購入するにはログインする必要があります。",
     "merch": "グッズ",
-    "merch_blurb": "OpenFrontの公式グッズが自宅に届く！",
+    "merch_blurb": "OpenWarsの公式グッズが自宅に届く！",
     "merch_visit_store": "ストアに行く",
     "no_crowns": "現在、クラウンで購入できるアイテムはありません。新しいアイテムの追加をお待ちください。",
     "no_effects": "現在、入手できるエフェクトはありません。新しいアイテムの追加をお待ちください。",
@@ -1483,7 +1483,7 @@
     "no_tribes": "まだ部族名を購入していません。",
     "packs": "パック",
     "patterns": "領土スキン",
-    "plutonium_amount": "プルトニウム所持量",
+    "Radium_amount": "ラジウム所持量",
     "price_per_month": "/月",
     "purchase_currency": "{currency} を購入",
     "purchase_failed": "購入に失敗しました。やり直してください。",
@@ -1495,7 +1495,7 @@
     "switch_button": "切り替える",
     "title": "ストア",
     "tribe_boost_button": "ブースト",
-    "tribe_boost_confirm": "{price} プルトニウムで「{name} 」をブーストしますか？ {days} 日間、他のプレイヤーのゲームではより頻繁に表示されます。",
+    "tribe_boost_confirm": "{price} ラジウムで「{name} 」をブーストしますか？ {days} 日間、他のプレイヤーのゲームではより頻繁に表示されます。",
     "tribe_boost_count": "1回ブースト",
     "tribe_boost_count_plural": "{count}回ブースト",
     "tribe_boost_failed": "ブーストに失敗しました。もう一度お試しください。",
@@ -1564,7 +1564,7 @@
     "browser": "ブラウザ",
     "canvas_2d_no_gpu": "Canvas 2D (GPUなし)",
     "charging": "充電中",
-    "chromium_tip": "OpenFrontはChromiumベースのブラウザで最適に動作します。",
+    "chromium_tip": "OpenWarsはChromiumベースのブラウザで最適に動作します。",
     "copied_to_clipboard": "クリップボードに情報がコピーされました！ヘルプが必要な場合は、Discordで共有してください。",
     "device_pixel_ratio": "デバイスのピクセル比",
     "environment": "環境",
@@ -1765,13 +1765,13 @@
     "other_won": "{player}の勝利！",
     "requeue": "もう一度プレイする",
     "spectate": "観戦する",
-    "support_openfront": "OpenFront を支援！",
+    "support_OpenWars": "OpenWars を支援！",
     "territory_pattern": "広告を見て領土スキンを手に入れよう！",
     "you_won": "勝利！",
     "your_team": "あなたのチームの勝利！",
     "youtube_tutorial": "ヘルプが必要ですか？"
   },
   "steam": {
-    "link_signpost": "既に OpenFront アカウントをお持ちですか? アカウント連携は後のアップデートで行われます。"
+    "link_signpost": "既に OpenWars アカウントをお持ちですか? アカウント連携は後のアップデートで行われます。"
   }
 }

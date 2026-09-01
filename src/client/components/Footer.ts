@@ -44,7 +44,7 @@ export class Footer extends LitElement {
             class="flex items-center justify-center gap-4 lg:gap-6 pt-2 w-full relative"
           >
             <a
-              href="https://github.com/openfrontio/OpenFrontIO"
+              href="https://github.com/OpenFrontIO/OpenFrontIO"
               target="_blank"
               rel="noopener noreferrer"
               class="opacity-60 hover:opacity-100 hover:scale-110 transition-all"
@@ -57,7 +57,7 @@ export class Footer extends LitElement {
               />
             </a>
             <a
-              href="https://www.reddit.com/r/OpenFront/"
+              href="https://www.reddit.com/r/OpenWars/"
               target="_blank"
               rel="noopener noreferrer"
               class="opacity-60 hover:opacity-100 hover:scale-110 transition-all"
@@ -74,7 +74,7 @@ export class Footer extends LitElement {
               </svg>
             </a>
             <a
-              href="https://discord.gg/openfront"
+              href="https://discord.gg/OpenWars"
               target="_blank"
               rel="noopener noreferrer"
               class="opacity-60 hover:opacity-100 hover:scale-110 transition-all"
@@ -90,7 +90,7 @@ export class Footer extends LitElement {
               </svg>
             </a>
             <a
-              href="https://openfront.wiki/Main_Page"
+              href="https://OpenWars.wiki/Main_Page"
               target="_blank"
               rel="noopener noreferrer"
               class="opacity-60 hover:opacity-100 hover:scale-110 transition-all"

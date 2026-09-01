@@ -17,7 +17,7 @@ import "./CapIcon";
 import { cosmeticDisplayName } from "./CosmeticPresentation";
 import "./EffectPreview";
 import { renderPatternPreview } from "./PatternPreview";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 
 @customElement("cosmetic-preview")
 export class CosmeticPreview extends LitElement {
@@ -126,10 +126,10 @@ export class CosmeticPreview extends LitElement {
       const pack = this.resolved.cosmetic as Pack;
       const isHard = pack.currency === "hard";
       const icon = isHard
-        ? html`<plutonium-icon
+        ? html`<Radium-icon
             class="block shrink-0"
             .size=${80}
-          ></plutonium-icon>`
+          ></Radium-icon>`
         : html`<cap-icon class="block shrink-0" .size=${80}></cap-icon>`;
       const colorClass = isHard ? "text-green-400" : "text-amber-700";
       const currencyKey = isHard ? "cosmetics.hard" : "cosmetics.soft";
@@ -162,7 +162,7 @@ export class CosmeticPreview extends LitElement {
       >
         <div class="flex flex-col items-center gap-1 w-full">
           <div class="self-start flex items-center gap-1.5">
-            <plutonium-icon .size=${24}></plutonium-icon>
+            <Radium-icon .size=${24}></Radium-icon>
             <span class="text-sm font-bold text-green-400"
               >${subscription.hardCurrencySignupBonus.toLocaleString()}</span
             >
@@ -171,7 +171,7 @@ export class CosmeticPreview extends LitElement {
             >
           </div>
           <div class="self-start flex items-center gap-1.5">
-            <plutonium-icon .size=${24}></plutonium-icon>
+            <Radium-icon .size=${24}></Radium-icon>
             <span class="text-sm font-bold text-green-400"
               >${subscription.dailyHardCurrency.toLocaleString()}</span
             >

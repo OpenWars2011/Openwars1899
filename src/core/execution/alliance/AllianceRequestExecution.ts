@@ -99,13 +99,14 @@ export class AllianceRequestExecution implements Execution {
         UnitType.AtomBomb,
         UnitType.HydrogenBomb,
         UnitType.MIRV,
+        UnitType.SuperMIRV,
         UnitType.MIRVWarhead,
       ])) {
         if (!unit.isActive() || unit.reachedTarget()) continue;
 
         const targetTile = unit.targetTile();
 
-        if (unit.type() === UnitType.MIRV) {
+        if (unit.type() === UnitType.MIRV || unit.type() === UnitType.SuperMIRV) {
           // Compare against the captured target player at launch rather than
           // the tile's current owner, so tile ownership changes mid-flight
           // (e.g. from third-party conquest or fallout) don't skip cancellation

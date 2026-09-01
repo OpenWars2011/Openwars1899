@@ -149,6 +149,12 @@ export class NationMIRVBehavior {
       return true;
     }
 
+    const strategicTarget = this.selectStrategicTarget();
+    if (strategicTarget && !this.wasRecentlyMirved(strategicTarget)) {
+      this.maybeSendMIRV(strategicTarget);
+      return true;
+    }
+
     return false;
   }
 
@@ -236,6 +242,30 @@ export class NationMIRVBehavior {
     return null;
   }
 
+  private selectStrategicTarget(): Player | null {
+    const targets = this.getValidMirvTargetPlayers();
+    if (targets.length === 0) return null;
+
+    const largestCityCount = Math.max(
+      1,
+      ...targets.map((target) => this.countCities(target)),
+    );
+    const richestGold = targets.reduce(
+      (richest, target) => Math.max(richest, Number(target.gold())),
+      1,
+    );
+
+    return targets.reduce((best, target) => {
+      const targetScore =
+        (this.countCities(target) / largestCityCount) * 0.6 +
+        (Number(target.gold()) / richestGold) * 0.4;
+      const bestScore =
+        (this.countCities(best) / largestCityCount) * 0.6 +
+        (Number(best.gold()) / richestGold) * 0.4;
+      return targetScore > bestScore ? target : best;
+    });
+  }
+
   // MIRV Cooldown Methods
   private wasRecentlyMirved(target: Player): boolean {
     const lastTick = NationMIRVBehavior.recentMirvTargets.get(target.id());
@@ -255,7 +285,7 @@ export class NationMIRVBehavior {
       return (
         p !== this.player &&
         p.isPlayer() &&
-        p.type() !== PlayerType.Bot &&
+        (this.player.type() === PlayerType.Bot || p.type() !== PlayerType.Bot) &&
         !this.player!.isOnSameTeam(p)
       );
     });

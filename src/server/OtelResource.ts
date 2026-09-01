@@ -17,11 +17,11 @@ export function getPromLabels() {
   const workerId = ServerEnv.workerId();
   return {
     "service.instance.id": ServerEnv.hostname(),
-    "openfront.environment": ServerEnv.env(),
-    "openfront.host": ServerEnv.host(),
-    "openfront.domain": ServerEnv.domain(),
-    "openfront.subdomain": ServerEnv.subdomain(),
-    "openfront.component":
+    "OpenWars.environment": ServerEnv.env(),
+    "OpenWars.host": ServerEnv.host(),
+    "OpenWars.domain": ServerEnv.domain(),
+    "OpenWars.subdomain": ServerEnv.subdomain(),
+    "OpenWars.component":
       workerId !== undefined ? "Worker " + workerId : "Master",
   };
 }

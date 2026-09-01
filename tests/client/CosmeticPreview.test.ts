@@ -110,8 +110,8 @@ const resolved = {
   pack: {
     type: "pack",
     cosmetic: {
-      name: "plutonium",
-      displayName: "1,000 Plutonium",
+      name: "Radium",
+      displayName: "1,000 Radium",
       currency: "hard",
       amount: 1000,
       bonusAmount: 0,
@@ -120,7 +120,7 @@ const resolved = {
     },
     colorPalette: null,
     relationship: "purchasable",
-    key: "pack:plutonium",
+    key: "pack:Radium",
   },
   subscription: {
     type: "subscription",
@@ -195,7 +195,7 @@ describe("CosmeticPreview", () => {
       [resolved.flag, "flag", "United States", "common"],
       [resolved.crown, "crown", "Golden Crown", "epic"],
       [resolved.effect, "effect", "Blue Wake", "legendary"],
-      [resolved.pack, "pack", "1,000 Plutonium", "rare"],
+      [resolved.pack, "pack", "1,000 Radium", "rare"],
       [resolved.subscription, "subscription", "Gold Membership", "legendary"],
     ] as const;
 
@@ -251,7 +251,7 @@ describe("CosmeticPreview", () => {
       },
       key: "pack:hero_pack",
     } as ResolvedCosmetic;
-    expect(cosmeticDisplayName(heroPack)).toBe("1,000 Plutonium");
+    expect(cosmeticDisplayName(heroPack)).toBe("1,000 Radium");
   });
 
   it("keeps pack icons and bonus ribbons inside the card preview", async () => {
@@ -265,7 +265,7 @@ describe("CosmeticPreview", () => {
       '[data-cosmetic-preview="pack"] > div',
     )!;
     expect(previewBox.className).not.toContain("pb-1");
-    expect(previewBox.querySelector("plutonium-icon")?.classList).toContain(
+    expect(previewBox.querySelector("Radium-icon")?.classList).toContain(
       "shrink-0",
     );
     expect(previewBox.textContent).toContain("+250 BONUS!");

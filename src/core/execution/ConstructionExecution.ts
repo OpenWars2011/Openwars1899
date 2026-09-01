@@ -125,11 +125,24 @@ export class ConstructionExecution implements Execution {
       case UnitType.MIRV:
         this.mg.addExecution(new MirvExecution(player, this.tile));
         break;
+      case UnitType.SuperMIRV:
+        this.mg.addExecution(
+          new NukeExecution(UnitType.SuperMIRV, player, this.tile),
+        );
+        break;
       case UnitType.Warship:
         this.mg.addExecution(
           new WarshipExecution({ owner: player, patrolTile: this.tile }),
         );
         break;
+      case UnitType.Helicopter:
+      case UnitType.Paratrooper: {
+        const spawnTile = player.canBuild(this.constructionType, this.tile);
+        if (spawnTile !== false) {
+          player.buildUnit(this.constructionType, spawnTile, {});
+        }
+        break;
+      }
       case UnitType.Port:
         this.mg.addExecution(new PortExecution(this.structure!));
         break;

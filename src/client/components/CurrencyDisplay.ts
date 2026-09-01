@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { translateText } from "../Utils";
 import "./CapIcon";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 
 // Player wallets arrive as numbers (CurrencyBalancesSchema coerces them), clan
 // treasuries as decimal bigint strings (ClanInfoSchema) that can exceed
@@ -68,7 +68,7 @@ export class CurrencyDisplay extends LitElement {
               class="flex items-center gap-1.5"
               title=${translateText("cosmetics.hard")}
             >
-              <plutonium-icon .size=${compact ? 12 : 16}></plutonium-icon>
+              <Radium-icon .size=${compact ? 12 : 16}></Radium-icon>
               <span class="${hardText}">${hard}</span>
             </div>`}
         ${soft === null

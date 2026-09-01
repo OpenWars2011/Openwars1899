@@ -6,7 +6,7 @@ import { translateText } from "../Utils";
 import "./CapIcon";
 import "./ConfirmDialog";
 import "./InsufficientCurrencyDialog";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 
 const PURCHASE_STYLE_ID = "purchase-button-styles";
 if (!document.getElementById(PURCHASE_STYLE_ID)) {
@@ -355,7 +355,7 @@ export class PurchaseButton extends LitElement {
           this.requestCurrencyPurchase("hard");
         }}
       >
-        <plutonium-icon .size=${20} style="margin-top:3px"></plutonium-icon>
+        <Radium-icon .size=${20} style="margin-top:3px"></Radium-icon>
         ${this.priceHard!.toLocaleString()}
       </button>
     `;

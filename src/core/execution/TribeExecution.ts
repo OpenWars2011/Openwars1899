@@ -3,6 +3,8 @@ import { PseudoRandom } from "../PseudoRandom";
 import { simpleHash } from "../Util";
 import { AllianceExtensionExecution } from "./alliance/AllianceExtensionExecution";
 import { DeleteUnitExecution } from "./DeleteUnitExecution";
+import { NationEmojiBehavior } from "./nation/NationEmojiBehavior";
+import { NationMIRVBehavior } from "./nation/NationMIRVBehavior";
 import { AiAttackBehavior } from "./utils/AiAttackBehavior";
 
 export class TribeExecution implements Execution {
@@ -12,6 +14,7 @@ export class TribeExecution implements Execution {
   private neighborsTerraNullius = true;
 
   private attackBehavior: AiAttackBehavior | null = null;
+  private mirvBehavior: NationMIRVBehavior | null = null;
   private attackRate: number;
   private attackTick: number;
   private triggerRatio: number;
@@ -53,6 +56,12 @@ export class TribeExecution implements Execution {
         this.reserveRatio,
         this.expandRatio,
       );
+      this.mirvBehavior = new NationMIRVBehavior(
+        this.random,
+        this.mg,
+        this.tribe,
+        new NationEmojiBehavior(this.random, this.mg, this.tribe),
+      );
 
       // Send an attack on the first tick
       this.attackBehavior.sendAttack(this.mg.terraNullius());
@@ -61,6 +70,7 @@ export class TribeExecution implements Execution {
 
     this.acceptAllAllianceRequests();
     this.deleteNextStructure();
+    this.mirvBehavior?.considerMIRV();
     this.maybeAttack();
   }
 

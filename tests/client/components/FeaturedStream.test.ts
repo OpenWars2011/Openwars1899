@@ -10,10 +10,10 @@ import { StreamsFeed } from "../../../src/core/ApiSchemas";
 
 const entry = {
   platform: "twitch" as const,
-  channel: "openfrontmasters",
+  channel: "OpenWarsmasters",
   displayName: "OFM",
   viewers: 100,
-  url: "https://twitch.tv/openfrontmasters",
+  url: "https://twitch.tv/OpenWarsmasters",
   startedAt: "2026-08-03T12:00:00Z",
 };
 
@@ -34,7 +34,7 @@ describe("FeaturedStream", () => {
     it("takes the first entry as the API's priority order", () => {
       const second = { ...entry, channel: "openfront" };
       expect(featuredStream(feed([entry, second]), new Set())?.channel).toBe(
-        "openfrontmasters",
+        "OpenWarsmasters",
       );
     });
 
@@ -42,13 +42,13 @@ describe("FeaturedStream", () => {
     // forever, because goOffline() nulled the very state the dedupe guard depended on.
     // Suppression is now keyed on the broadcast itself, so it survives that reset.
     it("skips a broadcast already known dead", () => {
-      const dead = new Set(["twitch:openfrontmasters:2026-08-03T12:00:00Z"]);
+      const dead = new Set(["twitch:OpenWarsmasters:2026-08-03T12:00:00Z"]);
       expect(featuredStream(feed([entry]), dead)).toBeNull();
     });
 
     it("falls through to the next live channel when the first is dead", () => {
       const second = { ...entry, channel: "openfront" };
-      const dead = new Set(["twitch:openfrontmasters:2026-08-03T12:00:00Z"]);
+      const dead = new Set(["twitch:OpenWarsmasters:2026-08-03T12:00:00Z"]);
       expect(featuredStream(feed([entry, second]), dead)?.channel).toBe(
         "openfront",
       );
@@ -56,7 +56,7 @@ describe("FeaturedStream", () => {
 
     // A genuine restart has a new startedAt, so it is embeddable again.
     it("embeds the same channel again after it restarts", () => {
-      const dead = new Set(["twitch:openfrontmasters:2026-08-03T12:00:00Z"]);
+      const dead = new Set(["twitch:OpenWarsmasters:2026-08-03T12:00:00Z"]);
       const restarted = { ...entry, startedAt: "2026-08-03T18:00:00Z" };
       expect(featuredStream(feed([restarted]), dead)?.startedAt).toBe(
         "2026-08-03T18:00:00Z",
@@ -81,7 +81,7 @@ describe("FeaturedStream", () => {
         gameEnv: "prod",
         numWorkers: 1,
         turnstileSiteKey: "x",
-        jwtAudience: "openfront.io",
+        jwtAudience: "OpenWars.io",
         instanceId: "desktop",
         gitCommit: "test",
       };
@@ -118,7 +118,7 @@ describe("FeaturedStream", () => {
           status: 200,
           json: async () => ({
             enabled: true,
-            channels: ["openfrontmasters"],
+            channels: ["OpenWarsmasters"],
           }),
         }),
       );

@@ -11,7 +11,7 @@
  *
  * Usage:
  *   npm run replay:game -- <gameID | path/to/record.json>
- *                          [--api-base https://api.openfront.io]
+ *                          [--api-base https://api.OpenWars.io]
  *                          [--teams 0,1,0,1]
  *
  * A bare game ID is fetched from the public API. --teams overrides each
@@ -60,7 +60,7 @@ interface Options {
 function parseArgs(argv: string[]): Options {
   const opts: Options = {
     source: "",
-    apiBase: "https://api.openfront.io",
+    apiBase: "https://api.OpenWars.io",
     teams: null,
   };
   for (let i = 0; i < argv.length; i++) {

@@ -85,7 +85,7 @@ export class PlayerExecution implements Execution {
 
     const troopInc = this.config.troopIncreaseRate(this.player);
     this.player.addTroops(troopInc);
-    const goldFromWorkers = this.config.goldAdditionRate(this.player);
+    const goldFromWorkers = this.goldIncome(this.config.goldAdditionRate(this.player));
     this.player.addGold(goldFromWorkers);
 
     // Record stats
@@ -121,6 +121,22 @@ export class PlayerExecution implements Execution {
         }
       }
     }
+  }
+
+  private goldIncome(baseIncome: bigint): bigint {
+    if (this.config.gameConfig().gameMap !== "Gold Valley") return baseIncome;
+
+    const centerX = Math.floor(this.mg.width() / 2);
+    const centerY = Math.floor(this.mg.height() / 2);
+    const valleyRadiusSquared = 250 * 250;
+    for (const tile of this.player.tiles()) {
+      const dx = this.mg.x(tile) - centerX;
+      const dy = this.mg.y(tile) - centerY;
+      if (dx * dx + dy * dy <= valleyRadiusSquared) {
+        return baseIncome * 5n;
+      }
+    }
+    return baseIncome;
   }
 
   private removeClusters() {
@@ -496,7 +512,8 @@ export class PlayerExecution implements Execution {
         u.type() !== UnitType.AtomBomb &&
         u.type() !== UnitType.HydrogenBomb &&
         u.type() !== UnitType.MIRVWarhead &&
-        u.type() !== UnitType.MIRV
+        u.type() !== UnitType.MIRV &&
+        u.type() !== UnitType.SuperMIRV
       ) {
         u.delete();
       }

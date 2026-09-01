@@ -15,8 +15,8 @@ import {
 describe("deriveServerHttpBase", () => {
   describe("web build (no injected serverHost) stays same-origin", () => {
     it("uses the document origin on https", () => {
-      expect(deriveServerHttpBase(undefined, "https:", "openfront.io")).toBe(
-        "https://openfront.io",
+      expect(deriveServerHttpBase(undefined, "https:", "OpenWars.io")).toBe(
+        "https://OpenWars.io",
       );
     });
 
@@ -28,42 +28,42 @@ describe("deriveServerHttpBase", () => {
 
     it("preserves the exact location.host (e.g. www vs apex)", () => {
       expect(
-        deriveServerHttpBase(undefined, "https:", "www.openfront.io"),
-      ).toBe("https://www.openfront.io");
+        deriveServerHttpBase(undefined, "https:", "www.OpenWars.io"),
+      ).toBe("https://www.OpenWars.io");
     });
 
     it("treats an empty serverHost as absent (web fallback)", () => {
-      expect(deriveServerHttpBase("", "https:", "openfront.io")).toBe(
-        "https://openfront.io",
+      expect(deriveServerHttpBase("", "https:", "OpenWars.io")).toBe(
+        "https://OpenWars.io",
       );
     });
   });
 
   describe("explicit serverHost targets the real game server", () => {
     it("targets the packaged prod host over https", () => {
-      expect(deriveServerHttpBase("openfront.io", "app:", "openfront")).toBe(
-        "https://openfront.io",
+      expect(deriveServerHttpBase("OpenWars.io", "app:", "openfront")).toBe(
+        "https://OpenWars.io",
       );
     });
 
     it("targets a branch-specific subdomain over https", () => {
       expect(
-        deriveServerHttpBase("my-feature.openfront.dev", "app:", "openfront"),
-      ).toBe("https://my-feature.openfront.dev");
+        deriveServerHttpBase("my-feature.OpenWars.dev", "app:", "openfront"),
+      ).toBe("https://my-feature.OpenWars.dev");
     });
 
     it("never falls through to the desktop app:// origin", () => {
       // The bug this fixes: relative /api fetches resolved against
-      // app://openfront, which serves local files and 404s every API route.
+      // app://OpenWars, which serves local files and 404s every API route.
       expect(
-        deriveServerHttpBase("openfront.io", "app:", "openfront"),
-      ).not.toContain("openfront/");
+        deriveServerHttpBase("OpenWars.io", "app:", "openfront"),
+      ).not.toContain("OpenWars/");
     });
 
     it("ignores location entirely when a serverHost is configured", () => {
       expect(
-        deriveServerHttpBase("openfront.io", "https:", "elsewhere.example"),
-      ).toBe("https://openfront.io");
+        deriveServerHttpBase("OpenWars.io", "https:", "elsewhere.example"),
+      ).toBe("https://OpenWars.io");
     });
   });
 
@@ -72,10 +72,10 @@ describe("deriveServerHttpBase", () => {
   // bases together, or lobbies get created on one server and played on another.
   describe("stays in lockstep with deriveServerWsBase", () => {
     it.each([
-      [undefined, "https:", "openfront.io"],
+      [undefined, "https:", "OpenWars.io"],
       [undefined, "http:", "localhost:3000"],
-      ["openfront.io", "app:", "openfront"],
-      ["main.openfront.dev", "app:", "openfront"],
+      ["OpenWars.io", "app:", "openfront"],
+      ["main.OpenWars.dev", "app:", "openfront"],
     ] as const)(
       "names the same host for (%s, %s, %s)",
       (serverHost, protocol, host) => {

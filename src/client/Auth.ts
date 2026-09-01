@@ -299,7 +299,7 @@ async function doCrazyGamesLogin(token: string): Promise<void> {
 }
 
 // Exchange a Steam Web-API ticket for our session. Like CrazyGames, the
-// refresh cookie isn't usable from app://openfront (cross-site), so we
+// refresh cookie isn't usable from app://OpenWars (cross-site), so we
 // re-exchange a fresh ticket on expiry rather than hitting /auth/refresh.
 async function doSteamLogin(ticket: string): Promise<void> {
   try {

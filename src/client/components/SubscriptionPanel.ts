@@ -11,7 +11,7 @@ import { translateCosmetic } from "../Cosmetics";
 import { showInGameAlert, showInGameConfirm } from "../InGameModal";
 import { translateText } from "../Utils";
 import "./baseComponents/Button";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 
 @customElement("subscription-panel")
 export class SubscriptionPanel extends LitElement {
@@ -156,7 +156,7 @@ export class SubscriptionPanel extends LitElement {
       <div
         class="flex items-center gap-3 rounded-lg bg-white/5 border border-white/10 px-3 py-2.5"
       >
-        <plutonium-icon .size=${24}></plutonium-icon>
+        <Radium-icon .size=${24}></Radium-icon>
         <div class="flex flex-col min-w-0">
           <span class="text-sm font-bold text-white leading-tight"
             >${value.toLocaleString()}</span

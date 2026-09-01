@@ -302,12 +302,12 @@ class Client {
     await customElements.whenDefined("mobile-nav-bar");
     await customElements.whenDefined("desktop-nav-bar");
 
-    const openFrontFont = new FontFace(
-      "OpenFront",
-      `url(${assetUrl("fonts/OpenFront.ttf")})`,
+    const OpenWarsFont = new FontFace(
+      "openfront",
+      `url(${assetUrl("fonts/OpenWars.ttf")})`,
     );
-    document.fonts.add(openFrontFont);
-    openFrontFont.load().catch(() => {});
+    document.fonts.add(OpenWarsFont);
+    OpenWarsFont.load().catch(() => {});
 
     const versionElements = document.querySelectorAll(
       "#game-version, .game-version-display",
@@ -320,7 +320,7 @@ class Client {
       const trimmed = version.trim();
       const displayVersion = trimmed.startsWith("v") ? trimmed : `v${trimmed}`;
       versionElements.forEach((el) => {
-        (el as HTMLElement).style.fontFamily = '"OpenFront", Inter, sans-serif';
+        (el as HTMLElement).style.fontFamily = '"openfront", Inter, sans-serif';
         el.textContent = displayVersion;
       });
     }
@@ -764,9 +764,14 @@ class Client {
       }
 
       if (type === "custom_currency") {
-        // Plutonium is credited asynchronously by the Stripe webhook; the
+        // Radium is credited asynchronously by the Stripe webhook; the
         // balance refreshes from /users/@me on the next load.
         alertAndStrip(translateText("store.custom_currency_purchase_success"));
+        return;
+      }
+
+      if (type === "game_gold") {
+        alertAndStrip("Payment received. Gold will be added to the current game shortly.");
         return;
       }
 

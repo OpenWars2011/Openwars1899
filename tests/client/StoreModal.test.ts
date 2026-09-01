@@ -140,8 +140,8 @@ const hydroAlt = explosion("hydro_burst_alt", "hydro");
 const pack: ResolvedCosmetic = {
   type: "pack",
   cosmetic: {
-    name: "plutonium",
-    displayName: "1,000 Plutonium",
+    name: "Radium",
+    displayName: "1,000 Radium",
     currency: "hard",
     amount: 1000,
     bonusAmount: 100,
@@ -151,7 +151,7 @@ const pack: ResolvedCosmetic = {
   } as never,
   colorPalette: null,
   relationship: "purchasable",
-  key: "pack:plutonium",
+  key: "pack:Radium",
 };
 
 const goldSubscription: ResolvedCosmetic = {
@@ -560,7 +560,7 @@ describe("StoreModal cosmetic browser", () => {
       cosmetic: {
         ...(pack.cosmetic as object),
         name: "hard-only",
-        displayName: "500 Plutonium",
+        displayName: "500 Radium",
         product: null,
         priceHard: 500,
       } as never,
@@ -582,7 +582,7 @@ describe("StoreModal cosmetic browser", () => {
             : "dollar",
       );
 
-    // The dollar-only pack holds the plutonium line open and vice versa, so
+    // The dollar-only pack holds the Radium line open and vice versa, so
     // both cards put the same currency at the same height.
     expect(lines(pack.key)).toEqual(["dollar", "reserved"]);
     expect(lines(hardPack.key)).toEqual(["reserved", "hard"]);

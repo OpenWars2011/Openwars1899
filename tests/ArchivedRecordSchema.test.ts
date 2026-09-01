@@ -14,7 +14,7 @@ function oldRecord() {
     version: "v0.0.2",
     gitCommit: "0123456789abcdef0123456789abcdef01234567",
     subdomain: "eu1",
-    domain: "openfront.io",
+    domain: "OpenWars.io",
     info: {
       gameID: "abCD1234",
       lobbyCreatedAt: 1700000000000,

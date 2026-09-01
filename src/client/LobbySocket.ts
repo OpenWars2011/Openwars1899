@@ -60,7 +60,7 @@ export class PublicLobbySocket {
       this.lastFull = null;
 
       // WS origin comes from ClientEnv (same-origin on web, audience-derived on
-      // the desktop app://openfront origin), not window.location.host.
+      // the desktop app://OpenWars origin), not window.location.host.
       const wsUrl = `${ClientEnv.serverWsBase()}${this.workerPath}/lobbies`;
 
       this.ws = new WebSocket(wsUrl);

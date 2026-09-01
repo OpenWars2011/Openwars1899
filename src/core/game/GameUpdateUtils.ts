@@ -53,6 +53,8 @@ export function diffPlayerUpdate(
     prev.markedDoomsdayClockTick === next.markedDoomsdayClockTick &&
     prev.isDecaying === next.isDecaying &&
     prev.hasSpawned === next.hasSpawned &&
+    prev.hasSatellite === next.hasSatellite &&
+    recordEqual(prev.stockHoldings, next.stockHoldings) &&
     prev.spawnTile === next.spawnTile &&
     prev.betrayals === next.betrayals &&
     prev.lastDeleteUnitTick === next.lastDeleteUnitTick &&
@@ -112,6 +114,8 @@ export function diffPlayerUpdate(
   );
   setIfDifferent("isDecaying", prev.isDecaying === next.isDecaying);
   setIfDifferent("hasSpawned", prev.hasSpawned === next.hasSpawned);
+  setIfDifferent("hasSatellite", prev.hasSatellite === next.hasSatellite);
+  setIfDifferent("stockHoldings", recordEqual(prev.stockHoldings, next.stockHoldings));
   setIfDifferent("spawnTile", prev.spawnTile === next.spawnTile);
   setIfDifferent("betrayals", prev.betrayals === next.betrayals);
   setIfDifferent(
@@ -163,6 +167,8 @@ export function diffPlayerUpdate(
 export function applyStateUpdate(target: PlayerState, pu: PlayerUpdate): void {
   // smallID is identity — never changes for a given player.
   if (pu.isAlive !== undefined) target.isAlive = pu.isAlive;
+  if (pu.hasSatellite !== undefined) target.hasSatellite = pu.hasSatellite;
+  if (pu.stockHoldings !== undefined) target.stockHoldings = pu.stockHoldings;
   if (pu.isDisconnected !== undefined)
     target.isDisconnected = pu.isDisconnected;
   if (pu.killedBy !== undefined) target.killedBy = pu.killedBy;
@@ -210,6 +216,17 @@ function numberArrayEqual(a?: number[], b?: number[]): boolean {
   if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
   return true;
+}
+
+function recordEqual(
+  a?: Partial<Record<string, number>>,
+  b?: Partial<Record<string, number>>,
+): boolean {
+  if (a === b) return true;
+  if (a === undefined || b === undefined) return false;
+  const keys = Object.keys(a);
+  if (keys.length !== Object.keys(b).length) return false;
+  return keys.every((key) => a[key] === b[key]);
 }
 
 function stringArrayEqual(a?: string[], b?: string[]): boolean {

@@ -445,7 +445,7 @@ export type PurchaseTribeNameResult =
   | { ok: false; code: "rate_limited"; retryAfterSeconds: number | null }
   | { ok: false; code: "failed" };
 
-// POST /users/@me/tribe_names — buy a custom tribe name (200 plutonium). The
+// POST /users/@me/tribe_names — buy a custom tribe name (200 Radium). The
 // name is screened, charged, and goes live right away as `pending`; review is
 // post-hoc and only takes bad names down. Spends hard currency, so callers
 // should invalidate the cached /users/@me afterwards.
@@ -798,6 +798,28 @@ export async function createCustomCurrencyCheckout(
   }
 }
 
+export async function createGameGoldCheckout(
+  gameID: string,
+): Promise<string | false> {
+  try {
+    const response = await fetch(
+      `${ClientEnv.serverHttpBase()}/${ClientEnv.workerPath(gameID)}/api/stripe/create-game-gold-checkout`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: await getAuthHeader(),
+        },
+        body: JSON.stringify({ gameID, hostname: window.location.origin }),
+      },
+    );
+    if (!response.ok) return false;
+    return (await response.json()).url ?? false;
+  } catch {
+    return false;
+  }
+}
+
 export async function cancelSubscription(): Promise<boolean> {
   try {
     const response = await fetch(`${getApiBase()}/subscriptions/@me/cancel`, {
@@ -1029,7 +1051,7 @@ export function getApiBase() {
 
 export function getAudience() {
   // Sourced from BOOTSTRAP_CONFIG (server/desktop-injected) rather than
-  // window.location, so the desktop app (app://openfront) targets real infra.
+  // window.location, so the desktop app (app://OpenWars) targets real infra.
   return ClientEnv.jwtAudience();
 }
 

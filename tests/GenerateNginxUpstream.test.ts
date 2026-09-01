@@ -30,7 +30,7 @@ function generate(numWorkers?: string): string {
 describe("generate-nginx-upstream.sh", () => {
   it("generates the upstream + worker port map for NUM_WORKERS=3", () => {
     expect(generate("3")).toBe(
-      `upstream openfront_workers {
+      `upstream OpenWars_workers {
     random;
     server 127.0.0.1:3001;
     server 127.0.0.1:3002;
@@ -49,7 +49,7 @@ map $worker $worker_port {
 
   it("defaults to a single worker when NUM_WORKERS is unset", () => {
     expect(generate(undefined)).toBe(
-      `upstream openfront_workers {
+      `upstream OpenWars_workers {
     random;
     server 127.0.0.1:3001;
 }

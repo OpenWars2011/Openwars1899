@@ -129,7 +129,7 @@ describe("PurchaseButton", () => {
       document.getElementById("purchase-button-styles")?.textContent ?? "";
 
     // Hover styling must key off the shared shell attribute so cards that are
-    // not <cosmetic-card> (e.g. the custom plutonium card) behave identically.
+    // not <cosmetic-card> (e.g. the custom Radium card) behave identically.
     expect(css).not.toMatch(/cosmetic-card:hover \.purchase-btn-wrap/);
     for (const target of [
       ".purchase-sparkle-streak",
@@ -206,10 +206,10 @@ describe("PurchaseButton", () => {
         [rowOneDollar, rowOneHard, rowTwoHard].map((el) => el.updateComplete),
       );
 
-      // Row one mixes dollars and plutonium, so both cards keep both lines.
+      // Row one mixes dollars and Radium, so both cards keep both lines.
       expect(rowOneDollar.reserveHard).toBe(true);
       expect(rowOneHard.reserveDollar).toBe(true);
-      // Row two is plutonium-only: no dollar line, and no caps line anywhere.
+      // Row two is Radium-only: no dollar line, and no caps line anywhere.
       expect(rowTwoHard.reserveDollar).toBe(false);
       expect(rowTwoHard.reserveHard).toBe(true);
       expect(rowOneDollar.reserveSoft).toBe(false);

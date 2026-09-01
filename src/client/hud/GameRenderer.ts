@@ -25,6 +25,7 @@ import { ChatModal } from "./layers/ChatModal";
 import { ControlPanel } from "./layers/ControlPanel";
 import { EmojiTable } from "./layers/EmojiTable";
 import { EventsDisplay } from "./layers/EventsDisplay";
+import { FogCityOverlay } from "./layers/FogCityOverlay";
 import { GameLeftSidebar } from "./layers/GameLeftSidebar";
 import { GameRightSidebar } from "./layers/GameRightSidebar";
 import { GraphicsSettingsModal } from "./layers/GraphicsSettingsModal";
@@ -39,6 +40,7 @@ import { PlayerInfoOverlay } from "./layers/PlayerInfoOverlay";
 import { PlayerPanel } from "./layers/PlayerPanel";
 import { ReplayPanel } from "./layers/ReplayPanel";
 import { SettingsModal } from "./layers/SettingsModal";
+import { StockMarketPanel } from "./layers/StockMarketPanel";
 import { SpawnTimer } from "./layers/SpawnTimer";
 import { UnitDisplay } from "./layers/UnitDisplay";
 import { WinModal } from "./layers/WinModal";
@@ -102,6 +104,19 @@ export function createRenderer(
   controlPanel.eventBus = eventBus;
   controlPanel.uiState = uiState;
   controlPanel.game = game;
+
+  const fogCityOverlay = document.createElement(
+    "fog-city-overlay",
+  ) as FogCityOverlay;
+  fogCityOverlay.game = game;
+  fogCityOverlay.eventBus = eventBus;
+  document.body.append(fogCityOverlay);
+  const stockMarketPanel = document.createElement(
+    "stock-market-panel",
+  ) as StockMarketPanel;
+  stockMarketPanel.game = game;
+  stockMarketPanel.eventBus = eventBus;
+  document.body.append(stockMarketPanel);
 
   const eventsDisplay = document.querySelector(
     "events-display",
@@ -321,6 +336,8 @@ export function createRenderer(
     unitDisplay,
     gameRightSidebar,
     controlPanel,
+    fogCityOverlay,
+    stockMarketPanel,
     playerInfo,
     winModal,
     newLobbyPrompt,

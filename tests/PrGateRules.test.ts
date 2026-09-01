@@ -72,7 +72,7 @@ describe("parseLinkedIssues", () => {
   });
 
   it("ignores cross-repo references", () => {
-    expect(parseLinkedIssues("Closes openfront/OpenFrontIO#5")).toEqual([]);
+    expect(parseLinkedIssues("Closes OpenWars/OpenFrontIO#5")).toEqual([]);
   });
 
   it("does not match keyword without # number", () => {

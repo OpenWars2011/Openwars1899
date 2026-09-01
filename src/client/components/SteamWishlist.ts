@@ -19,7 +19,7 @@ const WIDGET_HEIGHT = 190;
 const WIDGET_MIN_WIDTH = 501;
 
 /**
- * Steam's store widget for OpenFront.
+ * Steam's store widget for OpenWars.
  *
  * UTM parameters are forwarded by Steam into every link the widget renders
  * (store page, "Wishlist on Steam" button), so `campaign` is what shows up in
@@ -32,9 +32,9 @@ export function steamWidgetUrl(campaign: string): string {
   return steamUrl(`widget/${STEAM_APP_ID}/`, "widget", campaign);
 }
 
-/** Store page for OpenFront, tagged for the same UTM dashboard. */
+/** Store page for OpenWars, tagged for the same UTM dashboard. */
 export function steamStoreUrl(campaign: string): string {
-  return steamUrl(`app/${STEAM_APP_ID}/OpenFront/`, "link", campaign);
+  return steamUrl(`app/${STEAM_APP_ID}/OpenWars/`, "link", campaign);
 }
 
 function steamUrl(path: string, medium: string, campaign: string): string {

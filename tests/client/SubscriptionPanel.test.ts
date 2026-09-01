@@ -21,7 +21,7 @@ import type { UserSubscription } from "../../src/core/ApiSchemas";
 
 function sub(overrides: Partial<UserSubscription> = {}): UserSubscription {
   return {
-    tier: "plutonium",
+    tier: "Radium",
     status: "active",
     cancelAtPeriodEnd: false,
     currentPeriodEnd: new Date("2026-09-01T00:00:00Z"),

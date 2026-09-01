@@ -25,6 +25,7 @@ import {
 } from "./game/Game";
 import { ArchivedPlayerStatsSchema, PlayerStatsSchema } from "./StatsSchemas";
 import { flattenedEmojiTable, LOBBY_LABEL_MAX } from "./Util";
+import { STOCK_SYMBOLS } from "./game/StockMarket";
 
 export type GameID = string;
 export type ClientID = string;
@@ -54,7 +55,11 @@ export type Intent =
   | KickPlayerIntent
   | TogglePauseIntent
   | UpdateGameConfigIntent
-  | ToggleGameStartTimer;
+  | ToggleGameStartTimer
+  | PurchaseSatelliteIntent
+  | TradeStockIntent
+  | InvestNationIntent;
+
 
 export type AttackIntent = z.infer<typeof AttackIntentSchema>;
 export type CancelAttackIntent = z.infer<typeof CancelAttackIntentSchema>;
@@ -91,6 +96,11 @@ export type UpdateGameConfigIntent = z.infer<
 export type ToggleGameStartTimer = z.infer<
   typeof ToggleGameStartTimerIntentSchema
 >;
+export type PurchaseSatelliteIntent = z.infer<
+  typeof PurchaseSatelliteIntentSchema
+>;
+export type TradeStockIntent = z.infer<typeof TradeStockIntentSchema>;
+export type InvestNationIntent = z.infer<typeof InvestNationIntentSchema>;
 
 export type Turn = z.infer<typeof TurnSchema>;
 export type GameConfig = z.infer<typeof GameConfigSchema>;
@@ -423,6 +433,7 @@ export const GameConfigSchema = z.object({
       isWaterNukes: z.boolean().optional(),
       isDoomsdayClock: z.boolean().optional(),
       isOvertime: z.boolean().optional(),
+      dailyEvent: z.enum(["infiniteGold", "goldRush", "unlimitedMirvs"]).optional(),
     })
     .optional(),
   nations: zb.union(
@@ -450,6 +461,8 @@ export const GameConfigSchema = z.object({
   // that only know publicIds at create_game); resolved to clientID at lookup.
   nameRevealPublicIds: z.string().array().max(200).optional(),
   waterNukes: z.boolean().nullable().optional(),
+  isFogCity: z.boolean().nullable().optional(),
+    dailyEvent: z.enum(["infiniteGold", "goldRush", "unlimitedMirvs"]).nullable().optional(),
   randomSpawn: z.boolean(),
   maxPlayers: zb.uint().optional(),
   // OFM: allowlist of publicIds allowed to join (admin-only, see create_game).
@@ -593,6 +606,30 @@ export const DonateGoldIntentSchema = z.object({
   gold: zb.float({ min: 0 }).nullable(),
 });
 
+export const PurchaseGoldIntentSchema = z.object({
+  type: z.literal("purchase_gold"),
+  gold: zb.uint({ min: 1 }),
+});
+
+export const PurchaseSatelliteIntentSchema = z.object({
+  type: z.literal("purchase_satellite"),
+});
+
+export const TradeStockIntentSchema = z.object({
+  type: z.literal("trade_stock"),
+  symbol: z.enum(STOCK_SYMBOLS),
+  shares: zb.uint({ min: 1, max: 1000 }),
+  buy: z.boolean(),
+});
+
+// Invest in a specific nation's "stock" (fake country stock)
+export const InvestNationIntentSchema = z.object({
+  type: z.literal("invest_nation"),
+  targetID: MappedID,
+  shares: zb.uint({ min: 1, max: 1000 }),
+  buy: z.boolean(),
+});
+
 export const DonateTroopIntentSchema = z.object({
   type: z.literal("donate_troops"),
   recipient: MappedID,
@@ -689,6 +726,10 @@ export const IntentSchema = z.discriminatedUnion("type", [
   TargetPlayerIntentSchema,
   EmojiIntentSchema,
   DonateGoldIntentSchema,
+  PurchaseGoldIntentSchema,
+  PurchaseSatelliteIntentSchema,
+  TradeStockIntentSchema,
+  InvestNationIntentSchema,
   DonateTroopIntentSchema,
   BuildUnitIntentSchema,
   UpgradeStructureIntentSchema,

@@ -56,8 +56,8 @@ describe("ServerEnv.jwtAudience", () => {
   });
 
   test("returns DOMAIN when set", () => {
-    vi.stubEnv("DOMAIN", "openfront.io");
-    expect(ServerEnv.jwtAudience()).toBe("openfront.io");
+    vi.stubEnv("DOMAIN", "OpenWars.io");
+    expect(ServerEnv.jwtAudience()).toBe("OpenWars.io");
   });
 
   test("throws when DOMAIN unset", () => {
@@ -77,8 +77,8 @@ describe("ServerEnv.jwtIssuer", () => {
   });
 
   test("derives api.<audience> for non-localhost", () => {
-    vi.stubEnv("DOMAIN", "openfront.io");
-    expect(ServerEnv.jwtIssuer()).toBe("https://api.openfront.io");
+    vi.stubEnv("DOMAIN", "OpenWars.io");
+    expect(ServerEnv.jwtIssuer()).toBe("https://api.OpenWars.io");
   });
 });
 

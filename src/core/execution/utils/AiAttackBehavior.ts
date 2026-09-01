@@ -334,6 +334,11 @@ export class AiAttackBehavior {
       return false;
     };
 
+    const tactical = (): boolean => {
+      const target = this.findTacticalTarget(borderingEnemies);
+      return target !== null && this.sendAttack(target);
+    };
+
     const weakest = (): boolean => {
       if (borderingEnemies.length > 0) {
         // borderingEnemies is already sorted by troops (ascending), so first match is weakest
@@ -366,13 +371,13 @@ export class AiAttackBehavior {
         return [nuked, bots, retaliate, assist, betray, hated, weakest];
       case Difficulty.Medium:
         // prettier-ignore
-        return [bots, nuked, retaliate, assist, betray, hated, afk, traitor, weakest, island, donate];
+        return [bots, nuked, retaliate, assist, betray, hated, afk, traitor, tactical, weakest, island, donate];
       case Difficulty.Hard:
         // prettier-ignore
-        return [bots, retaliate, assist, betray, nuked, traitor, afk, hated, veryWeak, victim, weakest, island, donate];
+        return [bots, retaliate, assist, betray, nuked, traitor, afk, hated, veryWeak, victim, tactical, weakest, island, donate];
       case Difficulty.Impossible:
         // prettier-ignore
-        return [retaliate, bots, veryWeak, assist, traitor, afk, betray, victim, nuked, hated, weakest, island, donate];
+        return [retaliate, bots, veryWeak, assist, traitor, afk, betray, victim, nuked, hated, tactical, weakest, island, donate];
       default:
         assertNever(difficulty);
     }
@@ -605,6 +610,34 @@ export class AiAttackBehavior {
 
     // borderingEnemies is already sorted by troops (ascending), so first match is weakest very weak enemy
     return veryWeakEnemies.length > 0 ? veryWeakEnemies[0] : null;
+  }
+
+  private findTacticalTarget(borderingEnemies: Player[]): Player | null {
+    const candidates = borderingEnemies.filter((enemy) => {
+      if (!this.isFFA()) return true;
+      return enemy.troops() <= this.player.troops() * 1.5;
+    });
+    if (candidates.length === 0) return null;
+
+    const score = (enemy: Player): number => {
+      const maxTroops = Math.max(1, this.game.config().maxTroops(enemy));
+      const vulnerability = 1 - enemy.troops() / maxTroops;
+      const incoming = enemy
+        .incomingAttacks()
+        .filter((attack) => !this.player.isFriendly(attack.attacker()))
+        .reduce((total, attack) => total + attack.troops(), 0);
+      const pressure = Math.min(2, incoming / Math.max(1, enemy.troops()));
+      const hasStructures = enemy
+        .units()
+        .some((unit) => Structures.has(unit.type()));
+      const territoryValue = Math.log2(enemy.numTilesOwned() + 1) / 10;
+
+      return vulnerability * 3 + pressure * 2 + (hasStructures ? 2 : 0) + territoryValue;
+    };
+
+    return candidates.reduce((best, enemy) =>
+      score(enemy) > score(best) ? enemy : best,
+    );
   }
 
   private findNearestIslandEnemy(): Player | null {

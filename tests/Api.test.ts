@@ -41,14 +41,14 @@ describe("getAudience / getApiBase from BOOTSTRAP_CONFIG", () => {
   beforeEach(() => ClientEnv.reset());
 
   it("returns the configured audience (desktop staging)", () => {
-    setConfig("openfront.dev");
-    expect(getAudience()).toBe("openfront.dev");
-    expect(getApiBase()).toBe("https://api.openfront.dev");
+    setConfig("OpenWars.dev");
+    expect(getAudience()).toBe("OpenWars.dev");
+    expect(getApiBase()).toBe("https://api.OpenWars.dev");
   });
 
   it("returns the configured audience (prod)", () => {
-    setConfig("openfront.io");
-    expect(getAudience()).toBe("openfront.io");
-    expect(getApiBase()).toBe("https://api.openfront.io");
+    setConfig("OpenWars.io");
+    expect(getAudience()).toBe("OpenWars.io");
+    expect(getApiBase()).toBe("https://api.OpenWars.io");
   });
 });

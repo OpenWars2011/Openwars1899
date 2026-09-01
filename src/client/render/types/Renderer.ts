@@ -74,6 +74,8 @@ export interface PlayerState {
   markedDoomsdayClockTick: number;
   betrayals: number;
   hasSpawned: boolean;
+  hasSatellite?: boolean;
+  stockHoldings?: Partial<Record<string, number>>;
   /** TileRef the player picked as their spawn (undefined if not yet spawned). */
   spawnTile?: number;
   lastDeleteUnitTick: number;
