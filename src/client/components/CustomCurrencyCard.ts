@@ -2,17 +2,17 @@ import { html, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { createCustomCurrencyCheckout } from "../Api";
 import { translateText } from "../Utils";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 import "./PurchaseButton";
 
-// Fixed rate: 20 plutonium = $1.00 (5 cents each). Bounds and rate are
+// Fixed rate: 20 Radium = $1.00 (5 cents each). Bounds and rate are
 // enforced server-side; these are for UX only.
-const MIN_PLUTONIUM = 20;
-const MAX_PLUTONIUM = 2000;
+const MIN_Radium = 20;
+const MAX_Radium = 2000;
 
 @customElement("custom-currency-card")
 export class CustomCurrencyCard extends LitElement {
-  /** Always a clamped integer in [MIN_PLUTONIUM, MAX_PLUTONIUM]. */
+  /** Always a clamped integer in [MIN_Radium, MAX_Radium]. */
   @state() private amount = 100;
 
   createRenderRoot() {
@@ -20,8 +20,8 @@ export class CustomCurrencyCard extends LitElement {
   }
 
   private clamp(value: number): number {
-    if (!Number.isFinite(value)) return MIN_PLUTONIUM;
-    return Math.min(MAX_PLUTONIUM, Math.max(MIN_PLUTONIUM, Math.floor(value)));
+    if (!Number.isFinite(value)) return MIN_Radium;
+    return Math.min(MAX_Radium, Math.max(MIN_Radium, Math.floor(value)));
   }
 
   private get priceDollars(): string {
@@ -63,17 +63,17 @@ export class CustomCurrencyCard extends LitElement {
             data-custom-currency-preview
             class="relative flex w-full aspect-square flex-col items-center justify-center gap-1 overflow-hidden rounded-lg border border-white/10 bg-white/5 p-2"
           >
-            <plutonium-icon .size=${64}></plutonium-icon>
-            <label for="custom-plutonium-amount" class="sr-only"
-              >${translateText("store.plutonium_amount")}</label
+            <Radium-icon .size=${64}></Radium-icon>
+            <label for="custom-Radium-amount" class="sr-only"
+              >${translateText("store.Radium_amount")}</label
             >
             <input
-              id="custom-plutonium-amount"
+              id="custom-Radium-amount"
               type="number"
-              class="custom-plutonium-input w-24 text-center bg-black/30 border border-green-500/30 rounded px-1 py-0.5 text-lg font-black text-green-400 outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400/40"
-              aria-label=${translateText("store.plutonium_amount")}
-              min=${MIN_PLUTONIUM}
-              max=${MAX_PLUTONIUM}
+              class="custom-Radium-input w-24 text-center bg-black/30 border border-green-500/30 rounded px-1 py-0.5 text-lg font-black text-green-400 outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400/40"
+              aria-label=${translateText("store.Radium_amount")}
+              min=${MIN_Radium}
+              max=${MAX_Radium}
               step="1"
               .value=${String(this.amount)}
               @change=${this.onInputChange}
@@ -84,9 +84,9 @@ export class CustomCurrencyCard extends LitElement {
             <input
               type="range"
               class="w-[90%] accent-green-500 cursor-pointer"
-              aria-label=${translateText("store.plutonium_amount")}
-              min=${MIN_PLUTONIUM}
-              max=${MAX_PLUTONIUM}
+              aria-label=${translateText("store.Radium_amount")}
+              min=${MIN_Radium}
+              max=${MAX_Radium}
               step="1"
               .value=${String(this.amount)}
               @input=${this.onSlider}

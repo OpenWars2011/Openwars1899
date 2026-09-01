@@ -89,6 +89,8 @@ function stateFromUpdate(pu: PlayerUpdate): PlayerState {
     markedDoomsdayClockTick: pu.markedDoomsdayClockTick ?? -1,
     betrayals: pu.betrayals!,
     hasSpawned: pu.hasSpawned!,
+    hasSatellite: pu.hasSatellite ?? false,
+    stockHoldings: pu.stockHoldings ?? {},
     spawnTile: pu.spawnTile,
     lastDeleteUnitTick: pu.lastDeleteUnitTick!,
     allies: pu.allies!.slice(),

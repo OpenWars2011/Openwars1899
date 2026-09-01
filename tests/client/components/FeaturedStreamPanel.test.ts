@@ -126,14 +126,14 @@ describe("featured-stream panel", () => {
   });
 
   it("embeds exactly one player for the broadcast the API reports live", async () => {
-    await mount(stream("openfrontmasters"), stream("openfront"));
+    await mount(stream("OpenWarsmasters"), stream("openfront"));
     // One mount, not one per configured channel: the API already did the liveness check.
-    expect(FakePlayer.constructed).toEqual(["openfrontmasters"]);
+    expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]);
     expect(card()).not.toBeNull();
   });
 
   it("shows the panel once the player reports it is playing", async () => {
-    const el = await mount(stream("openfrontmasters"));
+    const el = await mount(stream("OpenWarsmasters"));
     expect(card()?.className).toContain("opacity-0"); // hidden while the player boots
     FakePlayer.last!.fire(FakePlayer.READY);
     await el.updateComplete;
@@ -143,7 +143,7 @@ describe("featured-stream panel", () => {
   it("hides the panel when the served feed was stale and the channel is offline", async () => {
     // Worst case of server-side liveness: the stream ended between the cron tick and
     // this page load. An offline-at-load channel fires READY with getEnded() true.
-    const el = await mount(stream("openfrontmasters"));
+    const el = await mount(stream("OpenWarsmasters"));
     FakePlayer.last!.ended = true;
     FakePlayer.last!.fire(FakePlayer.READY);
     await el.updateComplete;
@@ -154,32 +154,32 @@ describe("featured-stream panel", () => {
   // channel for up to ~3 min (2 min cron + 60s edge cache); before the fix, every poll
   // re-booted a full Twitch player — ~125 requests a minute, indefinitely.
   it("never re-mounts a player for a broadcast that reported offline", async () => {
-    const el = await mount(stream("openfrontmasters"));
+    const el = await mount(stream("OpenWarsmasters"));
     FakePlayer.last!.ended = true;
     FakePlayer.last!.fire(FakePlayer.READY);
     await el.updateComplete;
     expect(card()).toBeNull();
 
     await vi.advanceTimersByTimeAsync(10 * 60_000);
-    expect(FakePlayer.constructed).toEqual(["openfrontmasters"]);
+    expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]);
     expect(card()).toBeNull();
   });
 
   // ...but the suppression is per-broadcast, not per-channel, so a genuine restart is
   // embeddable again.
   it("mounts again when the same channel starts a new broadcast", async () => {
-    const el = await mount(stream("openfrontmasters"));
+    const el = await mount(stream("OpenWarsmasters"));
     FakePlayer.last!.ended = true;
     FakePlayer.last!.fire(FakePlayer.READY);
     await el.updateComplete;
-    expect(FakePlayer.constructed).toEqual(["openfrontmasters"]);
+    expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]);
 
-    serve(stream("openfrontmasters", "2026-08-03T18:00:00Z"));
+    serve(stream("OpenWarsmasters", "2026-08-03T18:00:00Z"));
     await vi.advanceTimersByTimeAsync(61_000);
     await el.updateComplete;
     expect(FakePlayer.constructed).toEqual([
-      "openfrontmasters",
-      "openfrontmasters",
+      "OpenWarsmasters",
+      "OpenWarsmasters",
     ]);
   });
 
@@ -188,15 +188,15 @@ describe("featured-stream panel", () => {
   // kickPlay() — a permanently blank card for the rest of the broadcast.
   it("retries the mount after a player construction failure", async () => {
     FakePlayer.failNext = true;
-    const el = await mount(stream("openfrontmasters"));
-    expect(FakePlayer.constructed).toEqual(["openfrontmasters"]); // attempted once
+    const el = await mount(stream("OpenWarsmasters"));
+    expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]); // attempted once
     expect(card()?.className).toContain("opacity-0"); // nothing playing
 
     await vi.advanceTimersByTimeAsync(61_000);
     await el.updateComplete;
     expect(FakePlayer.constructed).toEqual([
-      "openfrontmasters",
-      "openfrontmasters",
+      "OpenWarsmasters",
+      "OpenWarsmasters",
     ]);
   });
 
@@ -214,7 +214,7 @@ describe("featured-stream panel", () => {
 
     const open = async (adFree: boolean) => {
       (window as unknown as { adsEnabled?: boolean }).adsEnabled = !adFree;
-      const el = await mount(stream("openfrontmasters"));
+      const el = await mount(stream("OpenWarsmasters"));
       FakePlayer.last!.fire(FakePlayer.READY);
       await el.updateComplete;
       return el;
@@ -249,7 +249,7 @@ describe("featured-stream panel", () => {
       const before = getStreams.mock.calls.length;
       await vi.advanceTimersByTimeAsync(10 * 60_000);
       expect(getStreams).toHaveBeenCalledTimes(before); // no further requests
-      expect(FakePlayer.constructed).toEqual(["openfrontmasters"]); // no new player
+      expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]); // no new player
     });
 
     // Positive control: the same 10 minute jump does keep polling while the panel is
@@ -269,7 +269,7 @@ describe("featured-stream panel", () => {
       await el.updateComplete;
       await vi.advanceTimersByTimeAsync(10 * 60_000);
       expect(card()).toBeNull();
-      expect(FakePlayer.constructed).toEqual(["openfrontmasters"]);
+      expect(FakePlayer.constructed).toEqual(["OpenWarsmasters"]);
     });
 
     // A plain close is for this visit only, whoever you are.
@@ -304,7 +304,7 @@ describe("featured-stream panel", () => {
 
     it("shows again once the stored day is stale", async () => {
       localStorage.setItem("featured-stream-closed", "1999-1-1");
-      const el = await mount(stream("openfrontmasters"));
+      const el = await mount(stream("OpenWarsmasters"));
       FakePlayer.last!.fire(FakePlayer.READY);
       await el.updateComplete;
       expect(card()).not.toBeNull();
@@ -313,7 +313,7 @@ describe("featured-stream panel", () => {
   });
 
   it("hides the panel when a live stream ends mid-session", async () => {
-    const el = await mount(stream("openfrontmasters"));
+    const el = await mount(stream("OpenWarsmasters"));
     FakePlayer.last!.fire(FakePlayer.READY);
     await el.updateComplete;
     expect(card()).not.toBeNull();

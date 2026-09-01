@@ -1,0 +1,20 @@
+{
+  "name": "Gold Valley",
+  "id": "GoldValley",
+  "translation_key": "map.goldvalley",
+  "categories": ["arcade", "new"],
+  "multiplayer_frequency": 0,
+  "layers": [
+    {
+      "id": "gold-valley",
+      "placement": "land",
+      "nukeable": false
+    }
+  ],
+  "nations": [
+    { "coordinates": [180, 800], "name": "Westwatch", "flag": "ch" },
+    { "coordinates": [1420, 800], "name": "Eastwatch", "flag": "jp" },
+    { "coordinates": [800, 180], "name": "Northwatch", "flag": "ca" },
+    { "coordinates": [800, 1420], "name": "Southwatch", "flag": "au" }
+  ]
+}

@@ -17,6 +17,7 @@ import {
   WarshipState,
 } from "./Game";
 import { TileRef } from "./GameMap";
+import type { StockSymbol } from "./StockMarket";
 
 export interface GameUpdateViewData {
   tick: number;
@@ -256,6 +257,8 @@ export interface PlayerUpdate {
   outgoingAllianceRequests?: PlayerID[];
   alliances?: AllianceView[];
   hasSpawned?: boolean;
+  hasSatellite?: boolean;
+  stockHoldings?: Partial<Record<StockSymbol, number>>;
   spawnTile?: TileRef;
   betrayals?: number;
   lastDeleteUnitTick?: Tick;

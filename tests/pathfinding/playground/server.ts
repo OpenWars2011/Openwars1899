@@ -195,7 +195,7 @@ app.post("/api/spatial-query", async (req: Request, res: Response) => {
     if (!Array.isArray(target) || target.length !== 2) {
       return res.status(400).json({
         error: "Invalid target",
-        message: "target must be [x, y] coordinate array",
+        message: "target must be an array containing [x, y]",
       });
     }
 
@@ -258,3 +258,4 @@ Server running at: http://localhost:${PORT}
 Press Ctrl+C to stop
   `);
 });
+

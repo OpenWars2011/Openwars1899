@@ -23,6 +23,7 @@ import { censorPlayer } from "./Censor";
 import { Client } from "./Client";
 import { gameApiCors } from "./GameApiCors";
 import { GameManager } from "./GameManager";
+import { registerGoldPurchaseRoutes } from "./GoldPurchaseRoutes";
 import { registerGamePreviewRoute } from "./GamePreviewRoute";
 import type { GameServer } from "./GameServer";
 import { isSteamAuthenticated, planJoinVerify, verifyJoin } from "./JoinVerify";
@@ -53,7 +54,6 @@ export async function startWorker() {
   const __dirname = path.dirname(__filename);
 
   const app = express();
-  app.use(express.json({ limit: "5mb" }));
   const server = http.createServer(app);
   const wss = new WebSocketServer({
     noServer: true,
@@ -118,6 +118,9 @@ export async function startWorker() {
 
     next();
   });
+
+  registerGoldPurchaseRoutes(app, gm);
+  app.use(express.json({ limit: "5mb" }));
 
   app.set("trust proxy", 3);
   app.use(compression());

@@ -135,6 +135,9 @@ const MUTUALLY_EXCLUSIVE_MODIFIERS: [ModifierKey, ModifierKey][] = [
 ];
 
 export class MapPlaylist {
+    private dailyEventDate: string | null = null;
+    private dailyEvent: PublicGameModifiers["dailyEvent"];
+
   private playlists: Record<ScheduledPublicGameType, GameMapType[]> = {
     ffa: [],
     special: [],
@@ -159,6 +162,7 @@ export class MapPlaylist {
     const isOvertime: boolean | undefined =
       (mode === GameMode.FFA && Math.random() < OVERTIME_FFA_CHANCE) ||
       undefined;
+    const dailyEvent = this.getDailyEvent();
     if (
       isCompact &&
       mode === GameMode.Team &&
@@ -187,10 +191,12 @@ export class MapPlaylist {
       publicGameModifiers: {
         isCompact,
         isOvertime,
+        dailyEvent,
       },
       difficulty:
         playerTeams === HumansVsNations ? Difficulty.Hard : Difficulty.Medium,
-      infiniteGold: false,
+      infiniteGold: dailyEvent === "infiniteGold",
+      goldMultiplier: dailyEvent === "goldRush" ? 5 : undefined,
       infiniteTroops: false,
       maxTimerValue: undefined,
       instantBuild: false,
@@ -200,6 +206,7 @@ export class MapPlaylist {
           ? "disabled"
           : "default",
       gameMode: mode,
+      dailyEvent,
       playerTeams,
       bots: isCompact ? 100 : 400,
       spawnImmunityDuration: this.getSpawnImmunityDuration(playerTeams),
@@ -390,6 +397,7 @@ export class MapPlaylist {
         isPeaceTime,
         isWaterNukes,
         isDoomsdayClock,
+        this.dailyEvent,
       },
       // Rolled into the rotation: enable the anti-stall clock at a speed picked
       // per game so the pacing varies across the presets.
@@ -403,19 +411,20 @@ export class MapPlaylist {
           }
         : undefined,
       startingGold,
-      goldMultiplier,
+      goldMultiplier: this.dailyEvent === "goldRush" ? 5 : goldMultiplier,
       disableAlliances: isAlliancesDisabled ? true : undefined,
       difficulty:
         isHardNations || playerTeams === HumansVsNations
           ? Difficulty.Hard
           : Difficulty.Medium,
-      infiniteGold: false,
+      infiniteGold: this.dailyEvent === "infiniteGold",
       infiniteTroops: false,
       maxTimerValue: undefined,
       instantBuild: false,
       randomSpawn: isRandomSpawn ? true : false,
       nations,
       gameMode: mode,
+      this.dailyEvent,
       playerTeams,
       bots: isCompact ? 100 : 400,
       spawnImmunityDuration:
@@ -811,5 +820,19 @@ export class MapPlaylist {
 
     const base = Math.max(roundToNearest5((landTiles / 1_000_000) * 50), 5);
     return [base, roundToNearest5(base * 0.75), roundToNearest5(base * 0.5)];
+  }
+
+  private getDailyEvent(): PublicGameModifiers["dailyEvent"] {
+    const date = new Date().toISOString().slice(0, 10);
+    if (this.dailyEventDate !== date) {
+      this.dailyEventDate = date;
+      const events: NonNullable<PublicGameModifiers["dailyEvent"]>[] = [
+        "infiniteGold",
+        "goldRush",
+        "unlimitedMirvs",
+      ];
+      this.dailyEvent = events[Math.floor(Math.random() * events.length)];
+    }
+    return this.dailyEvent;
   }
 }

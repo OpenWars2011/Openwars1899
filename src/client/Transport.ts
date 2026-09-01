@@ -197,6 +197,24 @@ export class SendToggleGameStartTimer implements GameEvent {
   constructor() {}
 }
 
+export class SendPurchaseSatelliteIntentEvent implements GameEvent {}
+
+export class SendTradeStockIntentEvent implements GameEvent {
+  constructor(
+    public readonly symbol: string,
+    public readonly shares: number,
+    public readonly buy: boolean,
+  ) {}
+}
+
+export class SendInvestNationIntentEvent implements GameEvent {
+  constructor(
+    public readonly targetID: string,
+    public readonly shares: number,
+    public readonly buy: boolean,
+  ) {}
+}
+
 // Switch between playing and watching from the lobby screen.
 export class SendSpectateEvent implements GameEvent {
   constructor(public readonly spectator: boolean) {}
@@ -301,6 +319,25 @@ export class Transport {
     this.eventBus.on(SendToggleGameStartTimer, (e) =>
       this.onSendToggleGameStartTimer(e),
     );
+    this.eventBus.on(SendPurchaseSatelliteIntentEvent, () =>
+      this.sendIntent({ type: "purchase_satellite" }),
+    );
+    this.eventBus.on(SendTradeStockIntentEvent, (event) =>
+      this.sendIntent({
+        type: "trade_stock",
+        symbol: event.symbol as "Aurora",
+        shares: event.shares,
+        buy: event.buy,
+      }),
+    );
+    this.eventBus.on(SendInvestNationIntentEvent, (event) =>
+      this.sendIntent({
+        type: "invest_nation",
+        targetID: event.targetID as never,
+        shares: event.shares,
+        buy: event.buy,
+      }),
+    );
     this.eventBus.on(SendSpectateEvent, (e) => {
       this.lobbyConfig.spectator = e.spectator;
       this.sendMsg({
@@ -371,7 +408,7 @@ export class Transport {
     this.startPing();
     this.killExistingSocket();
     // WS origin comes from ClientEnv (same-origin on web, audience-derived on
-    // the desktop app://openfront origin), not window.location.host.
+    // the desktop app://OpenWars origin), not window.location.host.
     const workerPath = ClientEnv.workerPath(this.lobbyConfig.gameID);
     this.socket = new WebSocket(`${ClientEnv.serverWsBase()}/${workerPath}`);
     // Every frame is a zbin payload; without this they would arrive as Blobs.

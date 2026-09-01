@@ -10,7 +10,7 @@ import {
 import { translateText } from "../Utils";
 import "./baseComponents/Button";
 import "./CapIcon";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 
 // The new state of the rewards list after a claim. `currency` is the fresh
 // post-claim balances, or null when they couldn't be determined (the parent
@@ -117,7 +117,7 @@ export class RewardsPanel extends LitElement {
       >
         <div class="flex items-center gap-3 min-w-0">
           ${isHard
-            ? html`<plutonium-icon .size=${20}></plutonium-icon>`
+            ? html`<Radium-icon .size=${20}></Radium-icon>`
             : html`<cap-icon .size=${20}></cap-icon>`}
           <div class="flex flex-col min-w-0">
             <span

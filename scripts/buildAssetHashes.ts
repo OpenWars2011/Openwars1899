@@ -91,6 +91,13 @@ async function main(): Promise<void> {
   const root = path.join(import.meta.dirname, "..");
   const staticDir = path.join(root, "static");
 
+  // Check if static directory exists; create it if it doesn't
+  try {
+    await fs.access(staticDir);
+  } catch {
+    await fs.mkdir(staticDir, { recursive: true });
+  }
+
   const hashes = await hashDirectory(staticDir);
   await fs.writeFile(
     path.join(staticDir, "asset-hashes.json"),

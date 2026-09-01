@@ -19,7 +19,7 @@ import { showInGameConfirm } from "../InGameModal";
 import { translateText } from "../Utils";
 import { renderLoadingSpinner } from "./BaseModal";
 import "./InsufficientCurrencyDialog";
-import "./PlutoniumIcon";
+import "./RadiumIcon";
 import "./TribeStatsView";
 
 const MAX_TRIBE_NAME_LENGTH = 100;
@@ -173,7 +173,7 @@ export class TribesPanel extends LitElement {
     this.notice = { kind: "error", text };
   };
 
-  // A purchase spends plutonium and adds a pending name, so refresh both the
+  // A purchase spends Radium and adds a pending name, so refresh both the
   // list and the store header's balance (re-broadcast /users/@me like Main.ts).
   private async refreshAfterPurchase() {
     await this.load();
@@ -313,7 +313,7 @@ export class TribesPanel extends LitElement {
           ${translateText("store.purchase_tribe_button")}
           ${price !== null
             ? html`<span class="flex items-center gap-1">
-                <plutonium-icon .size=${18}></plutonium-icon>${price}
+                <Radium-icon .size=${18}></Radium-icon>${price}
               </span>`
             : ""}
         </button>
@@ -372,7 +372,7 @@ export class TribesPanel extends LitElement {
     >
       ${translateText("store.tribe_boost_button")}
       <span class="flex items-center gap-0.5 normal-case">
-        <plutonium-icon .size=${14}></plutonium-icon>${cfg.boostPriceHard}
+        <Radium-icon .size=${14}></Radium-icon>${cfg.boostPriceHard}
       </span>
     </button>`;
   }

@@ -5,11 +5,11 @@ import {
 
 describe("versionedReplayUrl", () => {
   test("builds the canonical replay URL from the audience and game id", () => {
-    expect(versionedReplayUrl("openfront.io", "abcd1234")).toBe(
-      "https://replay.openfront.io/abcd1234",
+    expect(versionedReplayUrl("OpenWars.io", "abcd1234")).toBe(
+      "https://replay.OpenWars.io/abcd1234",
     );
-    expect(versionedReplayUrl("openfront.dev", "abcd1234")).toBe(
-      "https://replay.openfront.dev/abcd1234",
+    expect(versionedReplayUrl("OpenWars.dev", "abcd1234")).toBe(
+      "https://replay.OpenWars.dev/abcd1234",
     );
   });
 
@@ -21,14 +21,14 @@ describe("versionedReplayUrl", () => {
 
 describe("isReplayShellHost", () => {
   test("matches the hostname of a generated replay URL (loop guard)", () => {
-    const url = versionedReplayUrl("openfront.io", "abcd1234");
+    const url = versionedReplayUrl("OpenWars.io", "abcd1234");
     expect(url).not.toBeNull();
     expect(isReplayShellHost(new URL(url!).hostname)).toBe(true);
   });
 
   test.each([
-    "openfront.io",
-    "main.openfront.dev",
+    "OpenWars.io",
+    "main.OpenWars.dev",
     "localhost",
     "cdn.ofedge.dev",
   ])("does not match ordinary app hosts (%s)", (hostname) => {

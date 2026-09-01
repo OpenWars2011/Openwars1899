@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { assetUrl } from "../../core/AssetUrls";
 
-const STYLE_ID = "plutonium-icon-styles";
+const STYLE_ID = "Radium-icon-styles";
 if (!document.getElementById(STYLE_ID)) {
   const style = document.createElement("style");
   style.id = STYLE_ID;
@@ -11,11 +11,11 @@ if (!document.getElementById(STYLE_ID)) {
   // icon each frame and forces the store's backdrop-blur surfaces to redraw,
   // which stutters the whole packs menu (see #4816 follow-up).
   style.textContent = `
-    @keyframes plutonium-pulse {
+    @keyframes Radium-pulse {
       0%, 100% { opacity: 0.45; transform: scale(1); }
       50%      { opacity: 1;    transform: scale(1.12); }
     }
-    @keyframes plutonium-rotate {
+    @keyframes Radium-rotate {
       0%   { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
@@ -23,8 +23,8 @@ if (!document.getElementById(STYLE_ID)) {
   document.head.appendChild(style);
 }
 
-@customElement("plutonium-icon")
-export class PlutoniumIcon extends LitElement {
+@customElement("Radium-icon")
+export class RadiumIcon extends LitElement {
   @property({ type: Number })
   size: number = 48;
 
@@ -39,13 +39,13 @@ export class PlutoniumIcon extends LitElement {
         style="width:${this.size}px; height:${this.size}px;"
       >
         <div
-          style="position:absolute; inset:-25%; pointer-events:none; background:radial-gradient(circle, rgba(34,197,94,0.5) 0%, rgba(34,197,94,0.22) 40%, transparent 68%); animation: plutonium-pulse 2s ease-in-out infinite; will-change: transform, opacity;"
+          style="position:absolute; inset:-25%; pointer-events:none; background:radial-gradient(circle, rgba(34,197,94,0.5) 0%, rgba(34,197,94,0.22) 40%, transparent 68%); animation: Radium-pulse 2s ease-in-out infinite; will-change: transform, opacity;"
         ></div>
         <img
-          src=${assetUrl("images/PlutoniumIcon.svg")}
-          alt="Plutonium"
+          src=${assetUrl("images/RadiumIcon.svg")}
+          alt="Radium"
           style="position:relative; width:${this.size}px; height:${this
-            .size}px; filter: drop-shadow(0 0 4px rgba(34,197,94,0.6)); animation: plutonium-rotate 7s linear infinite; will-change: transform;"
+            .size}px; filter: drop-shadow(0 0 4px rgba(34,197,94,0.6)); animation: Radium-rotate 7s linear infinite; will-change: transform;"
           draggable="false"
         />
       </div>

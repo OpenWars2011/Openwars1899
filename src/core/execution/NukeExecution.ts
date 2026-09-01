@@ -373,6 +373,7 @@ export class NukeExecution implements Execution {
 
     const mg = this.mg;
     const config = mg.config();
+    const targetPlayer = this.mg.owner(this.dst);
 
     const magnitude = config.nukeMagnitudes(this.nuke.type());
     const toDestroy = this.tilesToDestroy();
@@ -453,6 +454,7 @@ export class NukeExecution implements Execution {
         type === UnitType.HydrogenBomb ||
         type === UnitType.MIRVWarhead ||
         type === UnitType.MIRV ||
+        type === UnitType.SuperMIRV ||
         type === UnitType.SAMMissile
       ) {
         continue;
@@ -460,6 +462,15 @@ export class NukeExecution implements Execution {
       if (mg.euclideanDistSquared(dst, unit.tile()) < outer2) {
         unit.delete(true, destroyer);
       }
+    }
+
+    if (this.nukeType === UnitType.SuperMIRV && targetPlayer.isPlayer()) {
+      for (const tile of [...targetPlayer.tiles()]) {
+      targetPlayer.relinquish(tile);
+      if (mg.isLand(tile)) mg.queueWaterConversion(tile);
+      mg.queueNukeImpact(tile);
+      }
+      for (const unit of [...targetPlayer.units()]) unit.delete(true, destroyer);
     }
 
     this.redrawBuildings(magnitude.outer + SPRITE_RADIUS);

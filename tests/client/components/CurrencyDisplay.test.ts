@@ -65,7 +65,7 @@ describe("formatCurrencyAmount", () => {
 describe("currency-display", () => {
   it("renders both sides for a player wallet (numbers)", async () => {
     const el = await renderDisplay({ hard: 5, soft: 1000 });
-    expect(el.querySelector("plutonium-icon")).toBeTruthy();
+    expect(el.querySelector("Radium-icon")).toBeTruthy();
     expect(el.querySelector("cap-icon")).toBeTruthy();
     expect(el.textContent).toContain((1000).toLocaleString());
   });
@@ -79,14 +79,14 @@ describe("currency-display", () => {
 
   it("hides only the side that has no amount", async () => {
     const el = await renderDisplay({ hard: null, soft: "150" });
-    expect(el.querySelector("plutonium-icon")).toBeNull();
+    expect(el.querySelector("Radium-icon")).toBeNull();
     expect(el.querySelector("cap-icon")).toBeTruthy();
   });
 
   it("renders nothing at all when neither side has an amount", async () => {
     const el = await renderDisplay({ hard: null, soft: null });
     expect(el.querySelector("cap-icon")).toBeNull();
-    expect(el.querySelector("plutonium-icon")).toBeNull();
+    expect(el.querySelector("Radium-icon")).toBeNull();
     expect(el.textContent?.trim()).toBe("");
   });
 
@@ -100,7 +100,7 @@ describe("currency-display", () => {
     const full = await renderDisplay({ hard: 5, soft: 5, compact: false });
     const compact = await renderDisplay({ hard: 5, soft: 5, compact: true });
     const size = (el: CurrencyDisplay) =>
-      (el.querySelector("plutonium-icon") as HTMLElement & { size: number })
+      (el.querySelector("Radium-icon") as HTMLElement & { size: number })
         .size;
     expect(size(compact)).toBeLessThan(size(full));
   });

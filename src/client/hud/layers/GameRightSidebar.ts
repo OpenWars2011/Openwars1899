@@ -3,7 +3,7 @@ import { customElement, state } from "lit/decorators.js";
 import { assetUrl } from "../../../core/AssetUrls";
 import { EventBus } from "../../../core/EventBus";
 import { GameType } from "../../../core/game/Game";
-import { createNextLobby } from "../../Api";
+import { createGameGoldCheckout, createNextLobby } from "../../Api";
 import { ClientEnv } from "../../ClientEnv";
 import "../../components/DoomsdayClockPanel";
 import "../../components/OvertimePanel";
@@ -64,6 +64,7 @@ export class GameRightSidebar extends LitElement implements Controller {
   // Guards the in-game "New lobby" button so a double click doesn't fire twice
   // before we navigate to the successor lobby.
   private newLobbyRequested = false;
+  private goldPurchaseRequested = false;
   private spawnBarVisible = false;
   private immunityBarVisible = false;
 
@@ -263,6 +264,27 @@ export class GameRightSidebar extends LitElement implements Controller {
     }
   }
 
+  private async onGoldPurchaseClick(): Promise<void> {
+    if (this.goldPurchaseRequested || this._isSinglePlayer) return;
+    this.goldPurchaseRequested = true;
+    this.requestUpdate();
+    try {
+      const url = await createGameGoldCheckout(this.game.gameID());
+      if (url === false) {
+        void showInGameAlert(translateText("store.checkout_failed"));
+        this.goldPurchaseRequested = false;
+        this.requestUpdate();
+        return;
+      }
+      window.location.href = url;
+    } catch (error) {
+      console.error("Failed to create gold checkout", error);
+      this.goldPurchaseRequested = false;
+      this.requestUpdate();
+      void showInGameAlert(translateText("store.checkout_failed"));
+    }
+  }
+
   private async onExitButtonClick() {
     const isAlive = this.game.myPlayer()?.isAlive();
     if (isAlive) {
@@ -370,6 +392,18 @@ export class GameRightSidebar extends LitElement implements Controller {
 
         <!-- Buttons -->
         ${this.maybeRenderReplayButtons()}
+
+        ${!this._isSinglePlayer && !this.hasWinner
+          ? html`<button
+              type="button"
+              class="min-h-8 whitespace-nowrap rounded-md border border-amber-400/50 bg-amber-500/15 px-2 text-xs font-bold text-amber-200 hover:bg-amber-500/30 disabled:cursor-wait disabled:opacity-50"
+              ?disabled=${this.goldPurchaseRequested}
+              title="Buy 50,000,000 gold for CHF 0.50"
+              @click=${this.onGoldPurchaseClick}
+            >
+              ${this.goldPurchaseRequested ? "Opening checkout..." : "50M gold - CHF 0.50"}
+            </button>`
+          : ""}
 
         <div class="cursor-pointer" @click=${this.onSettingsButtonClick}>
           <img src=${settingsIcon} alt="settings" width="20" height="20" />

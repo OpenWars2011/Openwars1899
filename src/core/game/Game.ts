@@ -15,6 +15,7 @@ import { RailNetwork } from "./RailNetwork";
 import { Stats } from "./Stats";
 import { ReadonlyTileSet } from "./TileSet";
 import { UnitPredicate } from "./UnitGrid";
+import type { StockSymbol } from "./StockMarket";
 
 function isEnumValue<T extends Record<string, string | number>>(
   enumObj: T,
@@ -26,6 +27,7 @@ function isEnumValue<T extends Record<string, string | number>>(
 export type PlayerID = string;
 export type Tick = number;
 export type Gold = bigint;
+export type { StockSymbol } from "./StockMarket";
 
 export type WarshipState = {
   state: "patrolling" | "retreating" | "docked";
@@ -166,7 +168,11 @@ export interface PublicGameModifiers {
   isWaterNukes?: boolean;
   isDoomsdayClock?: boolean;
   isOvertime?: boolean;
+  isFogCity?: boolean;
+  dailyEvent?: DailyEvent;
 }
+
+export type DailyEvent = "infiniteGold" | "goldRush" | "unlimitedMirvs";
 
 // Largest bulk-purchase amount an intent may carry (mirrored by the intent
 // schemas' max). Also the length of BuildableUnit.upgradeCosts.
@@ -205,9 +211,12 @@ export enum UnitType {
   SAMLauncher = "SAM Launcher",
   City = "City",
   MIRV = "MIRV",
+  SuperMIRV = "Super MIRV",
   MIRVWarhead = "MIRV Warhead",
   Train = "Train",
   Factory = "Factory",
+  Helicopter = "Helicopter",
+  Paratrooper = "Paratrooper",
 }
 
 export enum TrainType {
@@ -221,12 +230,14 @@ export const Nukes = unitTypeGroup([
   UnitType.HydrogenBomb,
   UnitType.MIRVWarhead,
   UnitType.MIRV,
+  UnitType.SuperMIRV,
 ] as const);
 
 export const BuildableAttacks = unitTypeGroup([
   UnitType.AtomBomb,
   UnitType.HydrogenBomb,
   UnitType.MIRV,
+  UnitType.SuperMIRV,
   UnitType.Warship,
 ] as const);
 
@@ -247,6 +258,8 @@ export const BuildMenus = unitTypeGroup([
 export const PlayerBuildable = unitTypeGroup([
   ...BuildMenus.types,
   UnitType.TransportShip,
+  UnitType.Helicopter,
+  UnitType.Paratrooper,
 ] as const);
 
 export type PlayerBuildableUnitType = (typeof PlayerBuildable.types)[number];
@@ -264,6 +277,10 @@ export interface UnitParamsMap {
     troops?: number;
     targetTile?: TileRef;
   };
+
+  [UnitType.Helicopter]: Record<string, never>;
+
+  [UnitType.Paratrooper]: Record<string, never>;
 
   [UnitType.Warship]: {
     patrolTile: TileRef;
@@ -288,6 +305,11 @@ export interface UnitParamsMap {
   };
 
   [UnitType.MIRV]: {
+    targetTile?: number;
+    targetPlayer?: Player | TerraNullius;
+  };
+
+  [UnitType.SuperMIRV]: {
     targetTile?: number;
     targetPlayer?: Player | TerraNullius;
   };
@@ -605,6 +627,8 @@ export interface Player {
   markDisconnected(isDisconnected: boolean): void;
 
   hasSpawned(): boolean;
+  hasSatellite(): boolean;
+  purchaseSatellite(): boolean;
   setSpawnTile(spawnTile: TileRef): void;
   spawnTile(): TileRef | undefined;
 
@@ -619,6 +643,8 @@ export interface Player {
   gold(): Gold;
   addGold(toAdd: Gold, tile?: TileRef): void;
   removeGold(toRemove: Gold): Gold;
+  stockHoldings(): Readonly<Partial<Record<StockSymbol, number>>>;
+  tradeStock(symbol: StockSymbol, shares: number, buy: boolean): boolean;
   troops(): number;
   setTroops(troops: number): void;
   addTroops(troops: number): void;

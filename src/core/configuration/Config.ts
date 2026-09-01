@@ -297,7 +297,7 @@ export class Config {
     return this._gameConfig.randomSpawn;
   }
   infiniteGold(): boolean {
-    return this._gameConfig.infiniteGold;
+    return this._gameConfig.infiniteGold || this.dailyEvent() === "infiniteGold";
   }
   donateGold(): boolean {
     return this._gameConfig.donateGold;
@@ -309,7 +309,13 @@ export class Config {
     return this._gameConfig.donateTroops;
   }
   goldMultiplier(): number {
-    return this._gameConfig.goldMultiplier ?? 1;
+    return this.dailyEvent() === "goldRush"
+      ? 5
+      : (this._gameConfig.goldMultiplier ?? 1);
+  }
+
+  dailyEvent(): "infiniteGold" | "goldRush" | "unlimitedMirvs" | undefined {
+    return this._gameConfig.dailyEvent ?? undefined;
   }
   startingGold(playerInfo: PlayerInfo): Gold {
     if (playerInfo.playerType === PlayerType.Bot) {
@@ -395,6 +401,12 @@ export class Config {
           cost: () => 0n,
         };
         break;
+      case UnitType.Helicopter:
+      case UnitType.Paratrooper:
+        info = {
+          cost: () => 80_000_000n,
+        };
+        break;
       case UnitType.Warship:
         info = {
           cost: this.costWrapper(
@@ -440,6 +452,7 @@ export class Config {
       case UnitType.MIRV:
         info = {
           cost: (game: Game, player: Player) => {
+            if (this.dailyEvent() === "unlimitedMirvs") return 0n;
             if (
               player.type() === PlayerType.Human &&
               this.hasInfiniteGoldFor(player)
@@ -448,6 +461,11 @@ export class Config {
             }
             return 25_000_000n + game.stats().numMirvsLaunched() * 15_000_000n;
           },
+        };
+        break;
+      case UnitType.SuperMIRV:
+        info = {
+          cost: this.costWrapper(() => 10_000_000_000n, UnitType.SuperMIRV),
         };
         break;
       case UnitType.MIRVWarhead:
@@ -962,6 +980,8 @@ export class Config {
 
   nukeMagnitudes(unitType: UnitType): NukeMagnitude {
     switch (unitType) {
+      case UnitType.SuperMIRV:
+        return { inner: 1, outer: 1 };
       case UnitType.MIRVWarhead:
         return { inner: 12, outer: 18 };
       case UnitType.AtomBomb:
@@ -983,6 +1003,8 @@ export class Config {
         return 10;
       case UnitType.MIRV:
         return 15;
+      case UnitType.SuperMIRV:
+        return 12;
       case UnitType.MIRVWarhead:
         return 22;
     }

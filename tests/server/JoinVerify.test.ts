@@ -243,7 +243,7 @@ describe("isSteamAuthenticated", () => {
       sub: "s",
       iat: 0,
       iss: "i",
-      aud: "openfront.io",
+      aud: "OpenWars.io",
       exp: 0,
       ...(provider ? { provider } : {}),
     } as TokenPayload;

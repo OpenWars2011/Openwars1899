@@ -164,6 +164,21 @@ class SAMTargetingSystem {
     }
     const samOwner = this.sam.owner();
     const nukeOwner = unit.owner();
+    if (unit.type() === UnitType.SuperMIRV) {
+      const target = unit.targetTile();
+      if (target === undefined) return false;
+      const coveringSams = this.mg.nearbyUnits(
+        target,
+        this.mg.config().maxSamRange(),
+        UnitType.SAMLauncher,
+        ({ unit: candidate }) =>
+          isUnit(candidate) &&
+          candidate.isActive() &&
+          !candidate.isUnderConstruction() &&
+          candidate.owner() === samOwner,
+      );
+      if (coveringSams.length < 50) return false;
+    }
     if (samOwner.isFriendly(nukeOwner)) {
       return this.mg.getWinner() !== null && samOwner.isOnSameTeam(nukeOwner);
     }
@@ -218,7 +233,12 @@ class SAMTargetingSystem {
     const nukes = this.mg.nearbyUnits(
       samTile,
       detectionRange,
-      [UnitType.AtomBomb, UnitType.HydrogenBomb, UnitType.MIRVWarhead],
+      [
+        UnitType.AtomBomb,
+        UnitType.HydrogenBomb,
+        UnitType.SuperMIRV,
+        UnitType.MIRVWarhead,
+      ],
       this.isTargetableNearbyUnit,
     );
 
@@ -333,8 +353,6 @@ export class SAMLauncherExecution implements Execution {
     }
 
     this.pseudoRandom ??= new PseudoRandom(this.sam.id());
-
-    // target is already filtered to exclude nukes targeted by other SAMs
     const targets = this.targetingSystem.getValidTargets(ticks);
     for (const target of targets) {
       if (this.sam.isInCooldown()) {

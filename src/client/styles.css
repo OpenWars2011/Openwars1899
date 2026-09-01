@@ -6,16 +6,16 @@
 @theme {
   --default-ring-width: 3px;
   --default-ring-color: var(--color-malibu-blue);
-  --font-display: "OpenFront", Inter, Arial, sans-serif;
+  --font-display: "openfront", Inter, Arial, sans-serif;
 
-  /* Openfront.io brand palette — see Openfront_Brand_Guidelines.pdf §4 */
+  /* openfront.io brand palette — see OpenWars_Brand_Guidelines.pdf §4 */
   --color-malibu-blue: #0084d1;
   --color-aquarius: #3fa9f5;
   --color-dawn-blue: #cccccc;
   --color-bright-white: #ffffff;
   --color-bright-blue: #1e90ff;
 
-  /* Openfront Masters sub-brand */
+  /* OpenWars Masters sub-brand */
   --color-cyber-yellow: #ffd700;
   --color-limestone: #999999;
 
@@ -59,13 +59,13 @@
     color: var(--color-gray-400);
   }
 
-  .custom-plutonium-input {
+  .custom-Radium-input {
     appearance: textfield;
     -moz-appearance: textfield;
   }
 
-  .custom-plutonium-input::-webkit-outer-spin-button,
-  .custom-plutonium-input::-webkit-inner-spin-button {
+  .custom-Radium-input::-webkit-outer-spin-button,
+  .custom-Radium-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }

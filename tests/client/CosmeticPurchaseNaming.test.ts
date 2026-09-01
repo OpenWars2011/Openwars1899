@@ -12,7 +12,7 @@ vi.mock("../../src/client/Api", async (importOriginal) => ({
 const { getUserMe } = await import("../../src/client/Api");
 
 const translations = {
-  "cosmetics.hard": "plutonium",
+  "cosmetics.hard": "Radium",
   "inventory.selected_cosmetic_variant": "{name} ({variant})",
   "territory_patterns.pattern.stripes": "Ocean Stripes",
   "territory_patterns.color_palette.red": "Crimson",
@@ -68,7 +68,7 @@ describe("purchaseCosmetic naming", () => {
     expect(result).toMatchObject({
       item: "Ocean Stripes (Crimson)",
       shortfall: 110,
-      currency: "plutonium",
+      currency: "Radium",
     });
   });
 });

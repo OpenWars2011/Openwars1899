@@ -5,7 +5,7 @@ import { type ClanCurrencyType, donateToClan } from "../../ClanApi";
 import { translateText } from "../../Utils";
 import "../CapIcon";
 import { formatCurrencyAmount } from "../CurrencyDisplay";
-import "../PlutoniumIcon";
+import "../RadiumIcon";
 
 // UUID when available; crypto.randomUUID is undefined outside secure contexts
 // (e.g. dev over plain http on a LAN address), so fall back to random hex of
@@ -168,7 +168,7 @@ export class ClanDonateDialog extends LitElement {
       : null;
     // Selection is signaled three ways — a currency-colored fill+ring, a
     // checkmark badge, and full-strength text — so it reads at a glance and
-    // doesn't rely on color alone. Green for plutonium and amber for caps,
+    // doesn't rely on color alone. Green for Radium and amber for caps,
     // matching each currency's icon.
     const selectedClasses =
       type === "hard"
@@ -214,7 +214,7 @@ export class ClanDonateDialog extends LitElement {
           class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider"
         >
           ${type === "hard"
-            ? html`<plutonium-icon .size=${14}></plutonium-icon>`
+            ? html`<Radium-icon .size=${14}></Radium-icon>`
             : html`<cap-icon .size=${16}></cap-icon>`}
           ${this.currencyLabel(type)}
         </span>

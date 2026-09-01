@@ -23,6 +23,10 @@ import { PauseExecution } from "./PauseExecution";
 import { QuickChatExecution } from "./QuickChatExecution";
 import { RetreatExecution } from "./RetreatExecution";
 import { SpawnExecution } from "./SpawnExecution";
+import { PurchaseGoldExecution } from "./PurchaseGoldExecution";
+import { PurchaseSatelliteExecution } from "./PurchaseSatelliteExecution";
+import { TradeStockExecution } from "./TradeStockExecution";
+import { InvestNationExecution } from "./InvestNationExecution";
 import { TargetPlayerExecution } from "./TargetPlayerExecution";
 import { TransportShipExecution } from "./TransportShipExecution";
 import { TribeSpawner } from "./TribeSpawner";
@@ -100,6 +104,31 @@ export class Executor {
         );
       case "donate_gold":
         return new DonateGoldExecution(player, intent.recipient, intent.gold);
+      case "purchase_gold":
+        return new PurchaseGoldExecution(player, intent.gold);
+      case "purchase_satellite":
+        return new PurchaseSatelliteExecution(player);
+      case "trade_stock":
+        return new TradeStockExecution(
+          player,
+          intent.symbol,
+          intent.shares,
+          intent.buy,
+        );
+      case "invest_nation":
+        return new InvestNationExecution(
+          player,
+          intent.targetID,
+          intent.shares,
+          intent.buy,
+        );
+      case "invest_nation":
+        return new InvestNationExecution(
+          player,
+          intent.targetID,
+          intent.shares,
+          intent.buy,
+        );
       case "embargo":
         return new EmbargoExecution(player, intent.targetID, intent.action);
       case "embargo_all":

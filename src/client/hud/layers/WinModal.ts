@@ -156,7 +156,7 @@ export class WinModal extends LitElement implements Controller {
     return html`
       <div class="text-center mb-6 bg-black/30 p-2.5 rounded-sm">
         <h3 class="text-xl font-semibold text-white mb-3">
-          ${translateText("win_modal.support_openfront")}
+          ${translateText("win_modal.support_OpenWars")}
         </h3>
         <p class="text-white mb-3">
           ${translateText("win_modal.territory_pattern")}
@@ -237,7 +237,7 @@ export class WinModal extends LitElement implements Controller {
           ${translateText("win_modal.discord_description")}
         </p>
         <a
-          href="https://discord.com/invite/openfront"
+          href="https://discord.com/invite/OpenWars"
           target="_blank"
           rel="noopener noreferrer"
           class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-sm font-semibold transition-all duration-200 hover:bg-indigo-700 hover:-translate-y-px no-underline"

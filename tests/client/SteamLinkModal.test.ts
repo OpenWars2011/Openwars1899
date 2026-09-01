@@ -145,7 +145,7 @@ describe("SteamLinkModal", () => {
   // — the default state (usernameStatus starts at "unclaimed") — so this is
   // the common case, not an edge case. The confirm step exists precisely
   // because a shared machine's browser might be logged into someone else's
-  // OpenFront session; showing a placeholder noun instead of an identifying
+  // OpenWars session; showing a placeholder noun instead of an identifying
   // value there guts the whole point of the screen. Follows the repo-wide
   // `username ?? publicId` convention (see ApiSchemas.ts / PlayerName.ts).
   it("falls back to the account's publicId when the username is unclaimed (null), never a placeholder noun", async () => {

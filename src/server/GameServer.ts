@@ -744,6 +744,19 @@ export class GameServer {
     return clientID;
   }
 
+  public grantPurchasedGold(
+    persistentID: string,
+    gold: number,
+  ): "granted" | "not_found" | "not_playing" {
+    if (this._hasEnded || !this.hasStarted()) return "not_found";
+    const clientID = this.getClientIdForPersistentId(persistentID);
+    if (clientID === null) return "not_found";
+    const client = this.allClients.get(clientID);
+    if (client === undefined || client.spectator) return "not_playing";
+    this.addIntent({ type: "purchase_gold", clientID, gold });
+    return "granted";
+  }
+
   // Whether this persistentID has already been admitted (passed Turnstile and
   // other join authorization) for this game. Used to skip the single-use
   // Turnstile re-check when an already-admitted player reconnects. Kicked

@@ -112,7 +112,7 @@ describe("UsernameInput clan tag picker", () => {
     await signIn(
       el,
       premiumUser([
-        { tag: "OF", name: "OpenFront Official" },
+        { tag: "OF", name: "OpenWars Official" },
         { tag: "WOLF", name: "Wolfpack" },
       ]),
     );
@@ -122,7 +122,7 @@ describe("UsernameInput clan tag picker", () => {
 
     const rows = el.querySelectorAll("#clan-tag-menu .max-h-56 button");
     expect(rows).toHaveLength(2);
-    expect(rows[0].textContent).toContain("OpenFront Official");
+    expect(rows[0].textContent).toContain("OpenWars Official");
 
     (rows[1] as HTMLElement).click();
     await el.updateComplete;
@@ -135,7 +135,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("clears the tag from the menu", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
@@ -158,7 +158,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("keeps the typed tag in the free-text field when it matches an own clan", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
@@ -184,7 +184,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("closes the menu on Escape and on an outside pointerdown", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
@@ -230,7 +230,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("drops the selected tag when that clan is left", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
     (
@@ -255,7 +255,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("drops the selected tag when that clan is disbanded", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
     (
@@ -301,7 +301,7 @@ describe("UsernameInput clan tag picker", () => {
     // The error links into the clan modal, so joining is the usual way out of
     // it — the check has to be re-run against the new membership.
     getUserMe.mockResolvedValue(
-      premiumUser([{ tag: "OF", name: "OpenFront Official" }]),
+      premiumUser([{ tag: "OF", name: "OpenWars Official" }]),
     );
     checkClanTagOwnership.mockImplementation(async (tag: string) => ({
       tag,
@@ -325,7 +325,7 @@ describe("UsernameInput clan tag picker", () => {
   it("keeps the account snapshot when a refresh fails", async () => {
     localStorage.setItem("useVerifiedName", "true");
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     expect(el.isVerified()).toBe(true);
 
     // A network error or non-200 also resolves to false — and is cached, so
@@ -346,12 +346,12 @@ describe("UsernameInput clan tag picker", () => {
     q(el, "#clan-tag-button")!.click();
     await settle();
     await el.updateComplete;
-    expect(el.textContent).toContain("OpenFront Official");
+    expect(el.textContent).toContain("OpenWars Official");
   });
 
   it("leaves the selected tag playable when the refresh fails", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     q(el, "#clan-tag-button")!.click();
     await settle();
     await el.updateComplete;
@@ -383,7 +383,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("selects a listed clan without asking the API", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     q(el, "#clan-tag-button")!.click();
     await settle();
     await el.updateComplete;
@@ -463,7 +463,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("bypasses the cached profile when the picker is opened", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     // Being kicked, or having a join request approved, changes membership
     // server-side without invalidating this tab's cache.
@@ -476,12 +476,12 @@ describe("UsernameInput clan tag picker", () => {
 
     expect(invalidateUserMe).toHaveBeenCalled();
     expect(el.textContent).toContain("Newcomers");
-    expect(el.textContent).not.toContain("OpenFront Official");
+    expect(el.textContent).not.toContain("OpenWars Official");
   });
 
   it("leaves an unrelated clan's tag alone", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;
     (
@@ -546,7 +546,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("closes on Escape while the trigger still holds focus", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     // Opening leaves focus on the button, which is the menu's sibling — the
     // key never reaches a menu-level handler.
@@ -563,7 +563,7 @@ describe("UsernameInput clan tag picker", () => {
 
   it("keeps the menu open for a pointerdown inside the component", async () => {
     const el = await mount();
-    await signIn(el, premiumUser([{ tag: "OF", name: "OpenFront Official" }]));
+    await signIn(el, premiumUser([{ tag: "OF", name: "OpenWars Official" }]));
 
     q(el, "#clan-tag-button")!.click();
     await el.updateComplete;

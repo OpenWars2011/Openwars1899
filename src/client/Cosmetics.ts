@@ -64,7 +64,7 @@ export type PaymentMethod = "dollar" | "hard" | "soft";
 
 /** Returned by {@link purchaseCosmetic} when the player can't afford an item. */
 export interface InsufficientCurrency {
-  /** Display name of the currency, e.g. "Plutonium". */
+  /** Display name of the currency, e.g. "Radium". */
   currency: string;
   /** How much more currency is needed (raw; localized in the dialog text). */
   shortfall: number;
@@ -222,7 +222,7 @@ export async function purchaseCosmetic(
       currency: currencyName,
       shortfall: price - balance,
       item: itemName,
-      // Only plutonium can be topped up; caps are dismiss-only.
+      // Only Radium can be topped up; caps are dismiss-only.
       canTopUp: method === "hard",
     };
   }

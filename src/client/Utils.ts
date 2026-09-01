@@ -189,6 +189,20 @@ export function getActiveModifiers(
       formattedValue: `x${modifiers.goldMultiplier}`,
     });
   }
+  if (modifiers.dailyEvent) {
+    const eventLabelKeys = {
+      infiniteGold: "public_game_modifier.infinite_gold_event",
+      goldRush: "public_game_modifier.gold_rush_event",
+      unlimitedMirvs: "public_game_modifier.unlimited_mirvs_event",
+    } as const;
+    result.push({
+      labelKey: "public_game_modifier.daily_event",
+      badgeKey: "public_game_modifier.daily_event",
+      badgeParams: {
+        event: translateText(eventLabelKeys[modifiers.dailyEvent]),
+      },
+    });
+  }
   if (modifiers.isAlliancesDisabled) {
     result.push({
       labelKey: "public_game_modifier.disable_alliances_label",
