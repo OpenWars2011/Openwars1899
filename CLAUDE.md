@@ -66,7 +66,7 @@ The game server only serves `index.html` and the WebSocket. All other assets (JS
 | `zbin/README.md`            | Binary wire format for zod schemas     |
 | `docs/Auth.md`              | JWT/auth flow                          |
 | `docs/API.md`               | Public API endpoints                   |
-| `vite.config.ts`            | Build config, CDN handling             |
+| `vfig.ts`            | Build config, CDN handling             |
 
 ## UI Text / i18n
 

@@ -397,7 +397,11 @@ export class MapPlaylist {
         isPeaceTime,
         isWaterNukes,
         isDoomsdayClock,
+<<<<<<< HEAD
         dailyEvent,
+=======
+        this.dailyEvent,
+>>>>>>> 1b4dd645815da8961f0ca0565ff8d3d050b76b74
       },
       // Rolled into the rotation: enable the anti-stall clock at a speed picked
       // per game so the pacing varies across the presets.
@@ -411,20 +415,32 @@ export class MapPlaylist {
           }
         : undefined,
       startingGold,
+<<<<<<< HEAD
       goldMultiplier: dailyEvent === "goldRush" ? 5 : goldMultiplier,
+=======
+      goldMultiplier: this.dailyEvent === "goldRush" ? 5 : goldMultiplier,
+>>>>>>> 1b4dd645815da8961f0ca0565ff8d3d050b76b74
       disableAlliances: isAlliancesDisabled ? true : undefined,
       difficulty:
         isHardNations || playerTeams === HumansVsNations
           ? Difficulty.Hard
           : Difficulty.Medium,
+<<<<<<< HEAD
       infiniteGold: dailyEvent === "infiniteGold",
+=======
+      infiniteGold: this.dailyEvent === "infiniteGold",
+>>>>>>> 1b4dd645815da8961f0ca0565ff8d3d050b76b74
       infiniteTroops: false,
       maxTimerValue: undefined,
       instantBuild: false,
       randomSpawn: isRandomSpawn ? true : false,
       nations,
       gameMode: mode,
+<<<<<<< HEAD
       dailyEvent,
+=======
+      this.dailyEvent,
+>>>>>>> 1b4dd645815da8961f0ca0565ff8d3d050b76b74
       playerTeams,
       bots: isCompact ? 100 : 400,
       spawnImmunityDuration:
